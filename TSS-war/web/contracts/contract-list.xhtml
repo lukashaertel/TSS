@@ -7,7 +7,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>TSS - Time Sheet System</title>        
-        <link rel="stylesheet" href="css/circle.css" />
+        <link rel="stylesheet" href="../css/circle.css" />
     </h:head>
     <h:body style="padding-top: 60px">
         <b:navBar brand="TSS" brandHref="#" inverse="false" fixed="top" fluid="true">
@@ -34,7 +34,8 @@
                     </b:listLinks>
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <h1>${msg.contracts}</h1>
+                    <h1>${msg.contracts} <b:navCommandLink action="#{sampleFillBean.sampleContract()}"><b:iconAwesome name="plus" /></b:navCommandLink></h1>
+                    
                     <hr/>
                     <b:row styleClass="table-responsive">
                         <h:dataTable styleClass="table table-striped" value="#{contractListBean.contracts}" var="c" rows="15">
