@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="projectId" required="true" name="projectId" value="#{projectDetailsBean.id}">
+                <f:validateLongRange minimum="0"/>
+            </f:viewParam>
+        </f:metadata>
+    </f:view>
+
+    <ui:composition template="app.xhtml">
+        <ui:define name="extra-nav-left">
+            <b:navLink value="#{projectDetailsBean.project.name}" icon-awesome="file-text" href="#" active="true" />
+        </ui:define>
+
+        <ui:define name="content">
+            <!-- Content area -->
+            <h1>${msg.project}</h1>
+            <hr/>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{projectDetailsBean.project}" var="p">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{p.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Name" /></f:facet>
+                        <h:outputText value="#{p.name}" />
+                    </h:column>                            
+                </h:dataTable>
+            </b:row>
+            <h1>${msg.projectentries}</h1>
+            <hr/>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{projectDetailsBean.entries}" var="e" rows="15">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{e.id}" />
+                    </h:column>
+                </h:dataTable>
+            </b:row>
+        </ui:define>
+    </ui:composition>
+</html>

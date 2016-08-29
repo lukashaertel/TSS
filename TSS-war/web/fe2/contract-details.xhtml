@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- Parameter definition for contract details view -->
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="contractId" required="true" name="contractId" value="#{contractDetailsBean.id}">
+                <f:validateLongRange minimum="0"/>
+            </f:viewParam>
+        </f:metadata>
+    </f:view>
+
+    <ui:composition template="app.xhtml">
+        <ui:define name="extra-nav-left">
+            <b:navLink value="#{contractDetailsBean.contract.name}" icon-awesome="file-text" href="#" active="true" />
+        </ui:define>
+
+        <ui:define name="content">
+            <!-- Content area -->
+            <h1>${msg.contract}</h1>
+            <hr/>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.contract}" var="c">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{c.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Name" /></f:facet>
+                        <h:outputText value="#{c.name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Description" /></f:facet>
+                        <h:outputText value="#{c.description}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Comment" /></f:facet>
+                        <h:outputText value="#{c.comment}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Frequency" /></f:facet>
+                        <h:outputText value="#{c.frequency}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Hours per week" /></f:facet>
+                        <h:outputText value="#{c.hoursPerWeek}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Total hours due" /></f:facet>
+                        <h:outputText value="#{c.totalHoursDue}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Working days per week" /></f:facet>
+                        <h:outputText value="#{c.workingDaysPerWeek}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Vacation days per year" /></f:facet>
+                        <h:outputText value="#{c.vacationDaysPerYear}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{msg[c.contractStatus]}" />
+                    </h:column>
+                </h:dataTable>
+            </b:row>
+            <h1>${msg.timesheets}</h1>
+            <hr/>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.timeSheets}" var="t" rows="15">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputLink value="timesheet-details.xhtml">
+                            <h:outputText value="#{t.id}" />
+                            <f:param name="timeSheetId" value="${t.id}" />
+                        </h:outputLink>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{msg[t.status]}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Hours due" /></f:facet>
+                        <h:outputText value="#{t.hoursDue}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Start" /></f:facet>
+                        <h:outputText value="#{t.start}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="End" /></f:facet>
+                        <h:outputText value="#{t.end}" />
+                    </h:column>
+                </h:dataTable>
+            </b:row>
+        </ui:define>
+    </ui:composition>
+</html>
