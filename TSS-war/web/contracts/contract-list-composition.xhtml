@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h1>${msg.contracts} <b:navCommandLink action="#{sampleFillBean.sampleContract()}"><b:iconAwesome name="plus" /></b:navCommandLink></h1>
+
+    <hr/>
+    <h:dataTable styleClass="table table-striped" value="#{contractListBean.contracts}" var="c" rows="15">
+        <h:column>
+            <f:facet name="header"><h:outputText value="#" /></f:facet>
+            <h:outputText value="#{c.id}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Name" /></f:facet>
+            <h:outputLink value="contract-details.xhtml">
+                <h:outputText value="#{c.name}" />
+                <f:param name="contractId" value="${c.id}" />
+            </h:outputLink>
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Description" /></f:facet>
+            <h:outputText value="#{c.description}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Comment" /></f:facet>
+            <h:outputText value="#{c.comment}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Hours per week" /></f:facet>
+            <h:outputText value="#{c.hoursPerWeek}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Working days per week" /></f:facet>
+            <h:outputText value="#{c.workingDaysPerWeek}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Total hours due" /></f:facet>
+            <h:outputText value="#{c.totalHoursDue}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header"><h:outputText value="Status" /></f:facet>
+            <h:outputText value="#{msg[c.contractStatus]}" />
+        </h:column>
+    </h:dataTable>
+</ui:composition>
