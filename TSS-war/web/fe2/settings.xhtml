@@ -6,6 +6,9 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="app.xhtml">
+        <ui:define name="extra-nav-right">
+            <b:navCommandLink value="Do growl" action="#{sampleFillBean.doGrowl()}"  update="growlMessages" />
+        </ui:define>
         <ui:define name="content">
             <h1>There should be some content here.</h1>
         </ui:define>

@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.util.Currency;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.alpha.tss.entities.ContractStatus;
 import org.alpha.tss.entities.ContractType;
@@ -50,6 +52,10 @@ public class SampleFillBean implements Serializable {
                 1);
 
         return "contract-details.xhtml?faces-redirect=true&contractId=" + contract.getId();
+    }
+
+    public void doGrowl() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Date of creation: " + new Date(System.currentTimeMillis())));
     }
 
     public String sampleTimesheet(long contractId) {
