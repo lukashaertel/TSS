@@ -62,7 +62,7 @@ public class LoginBean {
     try {        
         if (request.getUserPrincipal() == null)
             request.login(this.username, this.password);        
-        context.getExternalContext().redirect("contracts/contract-list.xhtml");
+        context.getExternalContext().redirect("fe2/contracts.xhtml");
     } catch (ServletException e) {
       context.addMessage(null, new FacesMessage(e.getLocalizedMessage()));
       return;
