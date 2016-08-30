@@ -35,24 +35,11 @@
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
                     <h1>${msg.contract}</h1>
-                    <hr/>        
-                    <b:container fluid="true">
-                        <b:row>
-                            <b:inputText span="3" placeholder="Name"/>
-                        </b:row>
-                        <b:row>
-                            <b:inputText span="3" placeholder="Description"/>
-                        </b:row>
-                        <b:row>
-                            <b:inputText span="3" placeholder="Comment"/>
-                        </b:row>
-                        <b:row>
-                            <b:inputText span="3" placeholder="Name"/>
-                        </b:row>
-                        <b:row>
-                            <b:inputText span="3" placeholder="Name"/>
-                        </b:row>
-                    </b:container>
+                    <hr/>     
+                    <h:form>
+                    <b:inputText value="#{projectListBean.projectName}"></b:inputText>
+                    <b:commandButton value="Create" action="#{projectListBean.createProject()}"></b:commandButton>
+                    </h:form>
                 </b:column>
             </b:row>
         </b:container> 

@@ -18,7 +18,7 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "ProjectEntity.getAllProjects",
             query = "SELECT p FROM ProjectEntity p"
-            + " ORDER BY p.id"),
+            + " ORDER BY p.id DESC"),
     @NamedQuery(
             name = "ProjectEntity.getProjectById",
             query = "SELECT p FROM ProjectEntity p"
@@ -47,11 +47,8 @@ public class ProjectEntity extends AbstractEntity {
     public ProjectEntity() {
     }
 
-    public ProjectEntity(String name, Set<ContractEntity> contracts, Set<ProjectEntryEntity> entries, Set<AssistantEntity> owners) {
+    public ProjectEntity(String name) {
         this.name = name;
-        this.contracts = contracts;
-        this.entries = entries;
-        this.owners = owners;
     }
 
     public String getName() {

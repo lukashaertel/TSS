@@ -4,11 +4,12 @@
  */
 package org.alpha.tss.logic.dao;
 
-import java.sql.Date;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.alpha.tss.entities.ContractEntity;
@@ -33,8 +34,8 @@ public class ContractAccess {
             contractStatus, name, description, comment, frequency, hoursPerWeek,
             totalHoursDue, vacationHours, salary, start, end, abort, 
             workingDaysPerWeek, vacationDaysPerYear);
-        c.createId();
-        em.persist(c);
+        em.persist(c); 
+        em.flush();
         return c;
     }
     
@@ -60,5 +61,27 @@ public class ContractAccess {
                 ContractEntity.class)
                 .setParameter("filter", filter.trim().toLowerCase() + "%")
                 .getResultList();
+    }
+    
+    public ContractEntity setContractStatus(long id, ContractStatus status) {
+        ContractEntity c = em.find(ContractEntity.class, id);
+        c.setStatus(status);
+        em.merge(c);
+        return em.find(ContractEntity.class, id);
+    }
+    
+    public ContractEntity updateContract(long id, Date start, Date end, 
+            TimeSheetFrequency frequency, int hoursPerWeek, int totalHoursDue,
+            int workingDaysPerWeek, int vacationDaysPerYear) {
+        ContractEntity c = em.find(ContractEntity.class, id);
+        c.setStart(start);
+        c.setEnd(end);
+        c.setFrequency(frequency);
+        c.setHoursPerWeek(hoursPerWeek);
+        c.setTotalHoursDue(totalHoursDue);
+        c.setWorkingDaysPerWeek(workingDaysPerWeek);
+        c.setVacationDaysPerYear(vacationDaysPerYear);
+        em.merge(c);
+        return em.find(ContractEntity.class, id);
     }
 }

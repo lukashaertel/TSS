@@ -6,7 +6,7 @@ package org.alpha.tss.entities;
 
 //import java.time.Duration;
 import java.util.Currency;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "ContractEntity.getAllContracts",
             query = "SELECT c FROM ContractEntity c"
-            + " ORDER BY c.id"),
+            + " ORDER BY c.id DESC"),
     @NamedQuery(
             name = "ContractEntity.getContractById",
             query = "SELECT c FROM ContractEntity c"

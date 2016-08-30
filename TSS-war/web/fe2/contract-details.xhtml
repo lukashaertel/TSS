@@ -21,7 +21,11 @@
 
         <ui:define name="content">
             <!-- Content area -->
-            <h1>${msg.contract}</h1>
+            <h1>${msg.contract}
+                <b:commandButton value="Edit" action="#{contractDetailsBean.edit()}" look="warning" rendered="#{not contractDetailsBean.editmode and contractDetailsBean.editContractAllowed}"><b:iconAwesome name="pencil" /></b:commandButton>
+                <b:commandButton value="Save" action="#{contractDetailsBean.save()}" look="warning" rendered="#{contractDetailsBean.editmode and contractDetailsBean.editContractAllowed}"><b:iconAwesome name="save" /></b:commandButton>
+                <b:commandButton value="Start contract" action="#{contractDetailsBean.startContract()}" look="success" rendered="#{contractDetailsBean.editContractAllowed}" style="margin-left: 10px"><b:iconAwesome name="chevron-circle-right" /></b:commandButton>
+            </h1>
             <hr/>
             <b:row styleClass="table-responsive">
                 <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.contract}" var="c">
@@ -31,43 +35,68 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Name" /></f:facet>
-                        <h:outputText value="#{c.name}" />
+                        <h:outputText value="#{c.name}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Description" /></f:facet>
-                        <h:outputText value="#{c.description}" />
+                        <h:outputText value="#{c.description}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Comment" /></f:facet>
-                        <h:outputText value="#{c.comment}" />
+                        <h:outputText value="#{c.comment}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Start" /></f:facet>
+                        <h:outputText value="#{c.start}" rendered="#{not contractDetailsBean.editmode}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                        <h:inputTextarea value="#{c.start}" rendered="#{contractDetailsBean.editmode}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:inputTextarea>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="End" /></f:facet>
+                        <h:outputText value="#{c.end}" rendered="#{not contractDetailsBean.editmode}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                        <h:inputTextarea value="#{c.end}" rendered="#{contractDetailsBean.editmode}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:inputTextarea>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Frequency" /></f:facet>
-                        <h:outputText value="#{c.frequency}" />
+                        <h:outputText value="#{c.frequency}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea value="#{c.frequency}" rendered="#{contractDetailsBean.editmode}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Hours per week" /></f:facet>
-                        <h:outputText value="#{c.hoursPerWeek}" />
+                        <h:outputText value="#{c.hoursPerWeek}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea value="#{c.hoursPerWeek}" rendered="#{contractDetailsBean.editmode}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Total hours due" /></f:facet>
-                        <h:outputText value="#{c.totalHoursDue}" />
+                        <h:outputText value="#{c.totalHoursDue}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea value="#{c.totalHoursDue}" rendered="#{contractDetailsBean.editmode}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Working days per week" /></f:facet>
-                        <h:outputText value="#{c.workingDaysPerWeek}" />
+                        <h:outputText value="#{c.workingDaysPerWeek}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea value="#{c.workingDaysPerWeek}" rendered="#{contractDetailsBean.editmode}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Vacation days per year" /></f:facet>
-                        <h:outputText value="#{c.vacationDaysPerYear}" />
+                        <h:outputText value="#{c.vacationDaysPerYear}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea value="#{c.vacationDaysPerYear}" rendered="#{contractDetailsBean.editmode}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Status" /></f:facet>
-                        <h:outputText value="#{msg[c.contractStatus]}" />
+                        <h:outputText value="#{msg[c.contractStatus]}"/>
                     </h:column>
                 </h:dataTable>
             </b:row>
-            <h1>${msg.timesheets}</h1>
+            <h1>${msg.timesheets}
+                <b:commandButton value="Add" action="return false;" look="primary"><b:iconAwesome name="plus" /></b:commandButton>
+            </h1>
             <hr/>
             <b:row styleClass="table-responsive">
                 <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.timeSheets}" var="t" rows="15">
@@ -88,11 +117,15 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Start" /></f:facet>
-                        <h:outputText value="#{t.start}" />
+                        <h:outputText value="#{t.start}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="End" /></f:facet>
-                        <h:outputText value="#{t.end}" />
+                        <h:outputText value="#{t.end}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
                     </h:column>
                 </h:dataTable>
             </b:row>

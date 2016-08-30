@@ -4,7 +4,7 @@
  */
 package org.alpha.tss.logic.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

@@ -34,7 +34,7 @@
                     </b:listLinks>
                 </b:column>
                 <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-                    <h1>${msg.projects}</h1>
+                    <h1>${msg.projects} <b:navCommandLink action="#{sampleFillBean.sampleProject()}"><b:iconAwesome name="plus" /></b:navCommandLink></h1>
                     <hr/>
                     <b:row styleClass="table-responsive">
                         <h:dataTable styleClass="table table-striped" value="#{projectListBean.projects}" var="p" rows="15">

@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xxmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
@@ -90,7 +90,7 @@ and open the template in the editor.
 
     <h:body>
         <h:form id="navHost">
-            <b:navBar brand="TSS" brandHref="#">
+            <b:navBar brand="TSS" brandHref="">
                 <b:navbarLinks>
                     <!-- Link to the contracts and projects list, can be active -->
                     <b:navLink value="#{msg.contracts}" icon-awesome="hourglass" href="contracts.xhtml" 
@@ -127,7 +127,9 @@ and open the template in the editor.
         </h:form>
 
         <b:container id="contentHost">
-            <ui:insert name="content" />
+            <h:form>
+                <ui:insert name="content" />
+            </h:form>
         </b:container>
 
         <b:growl id="growlMessages" globalOnly="true" placementFrom="bottom"

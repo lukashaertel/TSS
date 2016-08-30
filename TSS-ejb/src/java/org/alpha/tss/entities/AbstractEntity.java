@@ -6,6 +6,8 @@ package org.alpha.tss.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
@@ -16,7 +18,7 @@ public abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 7263522586632357632L;
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Transient

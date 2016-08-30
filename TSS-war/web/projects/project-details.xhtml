@@ -7,7 +7,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:view>
         <f:metadata>
-            <f:viewParam id="contractId" required="true" name="contractId" value="#{contractDetailsBean.id}">
+            <f:viewParam id="projectId" required="true" name="projectId" value="#{projectDetailsBean.id}">
                 <f:validateLongRange minimum="0"/>
             </f:viewParam>
         </f:metadata>
@@ -36,7 +36,7 @@
                 <b:column col-sm="3" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink href="../contracts/contract-list.xhtml" value="${msg.contracts}"/>
-                        <b:navLink href="#" value="${msg.projects}" active="true"/>
+                        <b:navLink href="../projects/project-list.xhtml" value="${msg.projects}" active="true"/>
                         <b:navLink href="#" value="Export" />
                     </b:listLinks>
                 </b:column>
@@ -47,11 +47,12 @@
                         <h:dataTable styleClass="table table-striped" value="#{projectDetailsBean.project}" var="p">
                             <h:column>
                                 <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                <h:outputText value="#{p.id}" />
+                                <h:outputText value="#{p.id}" />                                
                             </h:column>
                             <h:column>
                                 <f:facet name="header"><h:outputText value="Name" /></f:facet>
-                                <h:outputText value="#{p.name}" />
+                                <h:outputText value="#{p.name}" rendered="#{not projectDetailsBean.editmode}"/>
+                                <h:inputText value="#{p.name}" rendered="#{projectDetailsBean.editmode}"/>
                             </h:column>                            
                         </h:dataTable>
                     </b:row>

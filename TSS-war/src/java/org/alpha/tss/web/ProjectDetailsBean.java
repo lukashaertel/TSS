@@ -5,7 +5,6 @@
 package org.alpha.tss.web;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -24,9 +23,33 @@ public class ProjectDetailsBean implements Serializable {
     private TssLogic tssLogic;
     
     private long id;
-    
     private Project project;
     private List<ProjectEntry> entries;
+    private boolean editmode;
+    
+    public boolean isEditmode() {
+    return editmode;
+    }
+    
+    public void edit() {
+    editmode = true;
+    }
+
+    public void save() {
+    editmode = false;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public List<ProjectEntry> getEntries() {
+        return entries;
+    }
 
     public long getId() {
         return id;
@@ -34,22 +57,6 @@ public class ProjectDetailsBean implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-        project = null;
-        for(Project p : tssLogic.getProjects())
-            if(p.getId() == id){
-                project = p;
-                break;
-        }
-        
-        // Not implemented in logic
-        entries = Collections.emptyList();
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public List<ProjectEntry> getEntries() {
-        return entries;
+        this.project = tssLogic.getProjectById(id);
     }
 }

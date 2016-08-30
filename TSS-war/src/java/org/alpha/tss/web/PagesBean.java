@@ -5,14 +5,8 @@
 package org.alpha.tss.web;
 
 import java.io.Serializable;
-import java.util.Locale;
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import net.bootsfaces.component.navLink.NavLink;

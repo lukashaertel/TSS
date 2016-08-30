@@ -20,14 +20,12 @@ public class ProjectAccess {
     @PersistenceContext(unitName = "TSS-PU")
     private EntityManager em;
     
-    public ProjectEntity createProject(String name, 
-            Set<ContractEntity> contracts, Set<ProjectEntryEntity> entries, 
-            Set<AssistantEntity> owners) {
+    public ProjectEntity createProject(String name) {
         
-        ProjectEntity t = new ProjectEntity(name, contracts, entries, owners);
-        t.createId();
-        em.persist(t);
-        return t;
+        ProjectEntity p = new ProjectEntity(name);
+        em.persist(p);
+        em.flush();
+        return p;
     }
     
     public List<ProjectEntity> getProjects() {

@@ -8,6 +8,10 @@
     <ui:composition template="app.xhtml">
         <ui:define name="content">
             <!-- Content area -->
+            <h1>${msg.projects}
+                <b:commandButton value="Add" action="#{sampleFillBean.sampleProject()}" look="primary"><b:iconAwesome name="plus" /></b:commandButton>
+            </h1>
+            <hr/>
             <h:dataTable styleClass="table table-striped" value="#{projectListBean.projects}" var="p" rows="15">
                 <h:column>
                     <f:facet name="header"><h:outputText value="#" /></f:facet>

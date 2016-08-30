@@ -27,4 +27,25 @@ public class ProjectListBean implements Serializable {
         this.projects = tssLogic.getProjects();
         return projects;
     }
+    
+    private String projectName;
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+    
+    public String createProject() {
+        if (projectName != null && projectName != "")
+        {
+            Project p = tssLogic.createProject(projectName);
+            return "project-details.xhtml?faces-redirect=true&projectId=" 
+                    + p.getId();
+        }
+        else
+            return "";
+    }
 }
