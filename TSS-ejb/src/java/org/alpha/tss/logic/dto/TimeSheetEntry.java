@@ -4,7 +4,7 @@
  */
 package org.alpha.tss.logic.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -13,13 +13,13 @@ public class TimeSheetEntry extends AbstractTransferObject {
     
     private String descriptionOfWork;
     private String comment;
-    private Date date;
+    private LocalDate date;
     private Integer hours;
     
     public TimeSheetEntry() {
     }    
 
-    public TimeSheetEntry( long id, String descriptionOfWork, String comment, Date date, Integer hours) {
+    public TimeSheetEntry( long id, String descriptionOfWork, String comment, LocalDate date, Integer hours) {
         super(id);
         this.descriptionOfWork = descriptionOfWork;
         this.comment = comment;
@@ -43,11 +43,11 @@ public class TimeSheetEntry extends AbstractTransferObject {
         this.comment = comment;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

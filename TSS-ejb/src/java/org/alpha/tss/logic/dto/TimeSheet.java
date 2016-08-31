@@ -4,7 +4,7 @@
  */
 package org.alpha.tss.logic.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.alpha.tss.entities.TimeSheetStatus;
 
@@ -13,14 +13,14 @@ public class TimeSheet extends AbstractTransferObject {
     private static final long serialVersionUID = -4808026614383646599L;
     
     private TimeSheetStatus status;
-    private Date start;
-    private Date end;
+    private LocalDate start;
+    private LocalDate end;
     private Integer hoursDue;
     
     public TimeSheet() {
     }
     
-    public TimeSheet(long id, TimeSheetStatus status, Date start, Date end,
+    public TimeSheet(long id, TimeSheetStatus status, LocalDate start, LocalDate end,
             Integer hoursDue) {
         super(id);
         this.status = status;
@@ -37,19 +37,19 @@ public class TimeSheet extends AbstractTransferObject {
         this.status = status;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 

@@ -8,10 +8,11 @@ import static java.lang.Math.toIntExact;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Currency;
-import java.util.Date;
+import java.util.Iterator;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -87,16 +88,14 @@ public class TssLogicImpl implements TssLogic {
     
     @Override
     //@RolesAllowed("assistant")
-    public Contract createContract(ContractType contractType,
-            ContractStatus contractStatus, String name, String description,
+    public Contract createContract(ContractType contractType, String name, String description,
             String comment, TimeSheetFrequency frequency, Integer hoursPerWeek,
             Integer totalHoursDue, Integer vacationHours, Currency salary,
-            Date start, Date end, Date abort, Integer workingDaysPerWeek,
+            LocalDate start, LocalDate end, LocalDate abort, Integer workingDaysPerWeek,
             Integer vacationDaysPerWeek) {
-        ContractEntity c = ca.createContract(contractType,
-            contractStatus, name, description, comment, frequency, hoursPerWeek,
-            totalHoursDue, vacationHours, salary, start, end, abort, 
-            workingDaysPerWeek, vacationDaysPerWeek);       
+        ContractEntity c = ca.createContract(contractType, name, description, 
+            comment, frequency, hoursPerWeek, totalHoursDue, vacationHours, 
+            salary, start, end, abort, workingDaysPerWeek, vacationDaysPerWeek);       
         
         return createContractTO(c);
     }
@@ -107,17 +106,97 @@ public class TssLogicImpl implements TssLogic {
     }
     
     @Override
+    //@RolesAllowed({"assistant", "supervisor"})
+    public Contract startContract(long id) {
+        // Change contract status to started
+        ContractEntity c = ca.setContractStatus(id, ContractStatus.STARTED);
+        
+        // Create calculated num of timesheets
+        int numOfTimeSheets = 0;
+        long days = ChronoUnit.DAYS.between(c.getStart(), c.getEnd());
+        int weeks = (int) Math.ceil(((double)days) / 7.0);
+        
+        switch (c.getFrequency()) {
+            case WEEKLY:                
+                numOfTimeSheets = weeks;
+                
+                for (int i = 0; i < numOfTimeSheets; i++) {
+                    LocalDate tStartDate = c.getStart().plusDays(i * 7);
+                    LocalDate tEndDate;
+                    if ( i == numOfTimeSheets - 1)
+                        tEndDate = c.getEnd();
+                    else
+                        tEndDate = c.getStart().plusDays((i+1)*7 - 1);
+                    ta.createTimeSheet(c, TimeSheetStatus.IN_PROGRESS, 
+                            tStartDate, tEndDate, c.getHoursPerWeek());
+                }
+                break;
+            case MONTHLY:
+                int months = (int) Math.ceil(((double)weeks) / 4.0);
+                numOfTimeSheets = months;
+                
+                for (int i = 0; i < numOfTimeSheets; i++) {
+                    LocalDate tStartDate = c.getStart().withDayOfMonth(1).plusMonths(i);
+                    LocalDate tEndDate = tStartDate.with(lastDayOfMonth());
+                    ta.createTimeSheet(c, TimeSheetStatus.IN_PROGRESS, 
+                            tStartDate, tEndDate, c.getHoursPerWeek());
+                }
+                break;
+        }
+        
+        return createContractTO(c);
+    }    
+    
+    @Override
+    public boolean isAbortContractAllowed(long id) {
+        ContractEntity c = ca.getContract(id);
+        if (c.getStatus() != ContractStatus.STARTED)
+            return false;
+        
+        List<TimeSheetEntity> t = ta.getTimeSheetsByContractId(id);
+        
+        for(Iterator<TimeSheetEntity> i = t.iterator(); i.hasNext();) {
+            TimeSheetStatus status = i.next().getStatus();
+            if(status != TimeSheetStatus.SIGNED_BY_SUPERVISOR &&
+                    status != TimeSheetStatus.IN_PROGRESS)
+                return false;
+        }
+        return true;
+    }
+    
+    @Override
+    //@RolesAllowed({"assistant", "supervisor"})
+    public boolean abortContract(long id) {
+        if(isAbortContractAllowed(id)) {
+            ca.abortContract(id);
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    //@RolesAllowed("supervisor")
     public Contract updateContract(Contract c) {
+        // Update only allowed when contract status equals PREPARED
+        if (c.getContractStatus() != ContractStatus.PREPARED)
+            return c;
+        
         return createContractTO(ca.updateContract(c.getId(), c.getStart(),
                 c.getEnd(), c.getFrequency(), c.getHoursPerWeek(),
                 c.getTotalHoursDue(), c.getWorkingDaysPerWeek(), 
                 c.getVacationDaysPerYear()));
-        }
+    }
+    
+    @Override
+    //@RolesAllowed("administrator")
+    public void deleteContract(long id) {
+        ca.deleteContract(id);
+    }
     
     @Override
     //@RolesAllowed("assistant")
     public TimeSheet createTimeSheet(ContractEntity contract, 
-            TimeSheetStatus status, Date start, Date end, Integer hoursDue) {
+            TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue) {
         TimeSheetEntity t = ta.createTimeSheet(contract, status, start, end,
                 hoursDue);
         return new TimeSheet(t.getId(), t.getStatus(), t.getStart(), t.getEnd(),
@@ -190,7 +269,7 @@ public class TssLogicImpl implements TssLogic {
 
     @Override
     public TimeSheetEntry createTimeSheetEntry(TimeSheetEntity timesheet, 
-            String descriptionOfWork, String comment, Date date, Integer hours) {
+            String descriptionOfWork, String comment, LocalDate date, Integer hours) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

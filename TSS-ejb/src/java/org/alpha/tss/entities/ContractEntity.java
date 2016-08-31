@@ -5,8 +5,8 @@
 package org.alpha.tss.entities;
 
 //import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -73,13 +73,13 @@ public class ContractEntity extends AbstractEntity {
     private Currency salary;
     
     @Column(nullable = false)
-    private Date start;
+    private LocalDate start;
     
     @Column(nullable = false)
-    private Date end;
+    private LocalDate end;
     
     @Column(nullable = false)
-    private Date abort;
+    private LocalDate abort;
     
     @Column(nullable = false)
     private Integer workingDaysPerWeek;
@@ -112,7 +112,7 @@ public class ContractEntity extends AbstractEntity {
     public ContractEntity(ContractType type, ContractStatus status, String name,
             String description, String comment, TimeSheetFrequency frequency,
             Integer hoursPerWeek, Integer totalHoursDue, Integer vacationHours,
-            Currency salary, Date start, Date end, Date abort,
+            Currency salary, LocalDate start, LocalDate end, LocalDate abort,
             Integer workingDaysPerWeek, Integer vacationDaysPerYear) {
         this.type = type;
         this.status = status;
@@ -211,27 +211,27 @@ public class ContractEntity extends AbstractEntity {
         this.salary = salary;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
-    public Date getAbort() {
+    public LocalDate getAbort() {
         return abort;
     }
 
-    public void setAbort(Date abort) {
+    public void setAbort(LocalDate abort) {
         this.abort = abort;
     }
 

@@ -4,21 +4,21 @@
  */
 package org.alpha.tss.web;
 
-import static com.sun.faces.context.flash.ELFlash.getFlash;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.ejb.EJBAccessException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.alpha.tss.entities.ContractStatus;
 import org.alpha.tss.logic.TssLogic;
 import org.alpha.tss.logic.dto.Contract;
 import org.alpha.tss.logic.dto.TimeSheet;
 
-@ManagedBean(name="contractDetailsBean")
+@Named
 @ViewScoped
 public class ContractDetailsBean implements Serializable {
     
@@ -46,14 +46,44 @@ public class ContractDetailsBean implements Serializable {
     }    
     
     public boolean isEditContractAllowed() {
-        if (this.contract.getContractStatus() == ContractStatus.PREPARED)
-            return true;
-        else
-            return false;
+        return this.contract.getContractStatus() == ContractStatus.PREPARED;
+    }
+    
+    public boolean isAbortContractAllowed() {
+        return tssLogic.isAbortContractAllowed(this.id);
+    }
+    
+    public boolean isHasTimeSheets() {
+        return !this.timeSheets.isEmpty();
     }
     
     public void startContract() {
-        this.contract = tssLogic.setContractStatus(this.id, ContractStatus.STARTED);
+        tssLogic.startContract(this.id);
+        this.refreshContract(this.id);
+    }
+    
+    public void abortContract() {
+        tssLogic.abortContract(this.id);
+        this.refreshContract(this.id);
+    }
+    
+    public void deleteContract() {     
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            tssLogic.deleteContract(this.id);
+            context.getExternalContext().redirect("contracts.xhtml");
+        }
+        catch(IOException e) {   
+            context.addMessage(null, new FacesMessage(e.getLocalizedMessage()));
+        }        
+        catch(EJBAccessException e) {   
+            context.addMessage(null, new FacesMessage("Access denied"));
+        }        
+    }
+    
+    public void refreshContract(long id) {
+        this.contract = tssLogic.getContractById(id);
+        this.timeSheets = tssLogic.getTimeSheetsByContractId(id);
     }
     
     public long getId() {
@@ -62,8 +92,7 @@ public class ContractDetailsBean implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-        this.contract = tssLogic.getContractById(id);
-        this.timeSheets = tssLogic.getTimeSheetsByContractId(id);
+        this.refreshContract(id);
     }
     
     public Contract getContract() {
