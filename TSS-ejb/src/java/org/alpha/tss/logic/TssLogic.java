@@ -3,8 +3,8 @@
  * (C) Robin Brehmert <rbrehmert@uni-koblenz.de>
  */
 package org.alpha.tss.logic;
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
 import org.alpha.tss.entities.ContractEntity;
@@ -24,10 +24,10 @@ public interface TssLogic {
      *  Contract
      */
     public Contract createContract(ContractType contractType,
-            ContractStatus contractStatus, String name, String description,
+            String name, String description,
             String comment, TimeSheetFrequency frequency, Integer hoursPerWeek,
             Integer totalHoursDue, Integer vacationHours, Currency salary,
-            Date start, Date end, Date abort, Integer workingDaysPerWeek,
+            LocalDate start, LocalDate end, LocalDate abort, Integer workingDaysPerWeek,
             Integer vacationDaysPerWeek);
     
     public Contract getContractById(long id);
@@ -35,12 +35,16 @@ public interface TssLogic {
     public List<Contract> getContractsFiltered(String filter);
     public Contract setContractStatus(long id, ContractStatus status);
     public Contract updateContract(Contract contract);
+    public Contract startContract(long id);
+    public boolean isAbortContractAllowed(long id);
+    public boolean abortContract(long id);
+    public void deleteContract(long id);
     
     /*
      *  TimeSheet
      */
     public TimeSheet createTimeSheet(ContractEntity contract, 
-            TimeSheetStatus status, Date start, Date end, Integer hoursDue);
+            TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue);
     public TimeSheet getTimeSheetById(long id);
     public List<TimeSheet> getTimeSheetsByContractId(long contractId);
     public List<TimeSheet> getTimeSheetsFiltered(String filter);
@@ -51,7 +55,7 @@ public interface TssLogic {
      *  TimeSheetEntry
      */
     public TimeSheetEntry createTimeSheetEntry(TimeSheetEntity timesheet,
-            String descriptionOfWork, String comment, Date date, Integer hours);
+            String descriptionOfWork, String comment, LocalDate date, Integer hours);
     public TimeSheetEntry getTimeSheetEntryById(long id);
     public List<TimeSheetEntry> getTimeSheetEntriesByContractId(long contractId);
     

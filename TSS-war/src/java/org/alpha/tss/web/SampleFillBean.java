@@ -5,7 +5,7 @@
 package org.alpha.tss.web;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,7 +41,6 @@ public class SampleFillBean implements Serializable {
 
         Contract contract = tssLogic.createContract(
                 ContractType.FIXED_HOURS,
-                ContractStatus.PREPARED,
                 "Example Contract Fixed Hours",
                 "An example contract with fixed hours as mode",
                 "Created by sample fill",
@@ -49,9 +48,9 @@ public class SampleFillBean implements Serializable {
                 40,
                 2000, 240,
                 Currency.getInstance("EUR"),
-                Date.valueOf("2016-10-10"),
-                Date.valueOf("2016-11-10"),
-                Date.valueOf("2018-10-10"),
+                LocalDate.of(2016, 10, 10),
+                LocalDate.of(2016, 11, 10),
+                LocalDate.of(2016, 10, 10),
                 6,
                 1);
 

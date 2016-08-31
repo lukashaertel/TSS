@@ -5,7 +5,7 @@
 package org.alpha.tss.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -54,14 +54,14 @@ public class TimeSheetEntity extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private TimeSheetStatus status;
     
-    private Date start;
-    private Date end;
+    private LocalDate start;
+    private LocalDate end;
     private Integer hoursDue;
     
     public TimeSheetEntity() {
     }
 
-    public TimeSheetEntity(ContractEntity contract, TimeSheetStatus status, Date start, Date end, Integer hoursDue) {
+    public TimeSheetEntity(ContractEntity contract, TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue) {
         this.contract = contract;
         this.status = status;
         this.start = start;
@@ -93,19 +93,19 @@ public class TimeSheetEntity extends AbstractEntity {
         this.status = status;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 

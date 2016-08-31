@@ -8,8 +8,8 @@
     <ui:composition template="app.xhtml">
         <ui:define name="content">
             <!-- Content area -->
-            <h1>${msg.contract}
-                <b:commandButton value="Add" action="#{sampleFillBean.sampleContract()}" look="primary"><b:iconAwesome name="plus" /></b:commandButton>
+            <h1>${msg.contracts}
+                <b:commandButton value="Add" action="#{sampleFillBean.sampleContract()}" look="primary" iconAwesome="plus"/>
             </h1>
             <hr/>
             <h:dataTable styleClass="table table-striped" value="#{contractListBean.contracts}" var="c" rows="15">

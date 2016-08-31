@@ -4,8 +4,8 @@
  */
 package org.alpha.tss.logic.dao;
 
+import java.time.LocalDate;
 import java.util.Currency;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,15 +24,15 @@ public class ContractAccess {
     private EntityManager em;
     
     public ContractEntity createContract(ContractType contractType,
-            ContractStatus contractStatus, String name, String description,
+            String name, String description,
             String comment, TimeSheetFrequency frequency, Integer hoursPerWeek,
             Integer totalHoursDue, Integer vacationHours, Currency salary,
-            Date start, Date end, Date abort, Integer workingDaysPerWeek,
+            LocalDate start, LocalDate end, LocalDate abort, Integer workingDaysPerWeek,
             Integer vacationDaysPerYear) {
         
         ContractEntity c = new ContractEntity(contractType,
-            contractStatus, name, description, comment, frequency, hoursPerWeek,
-            totalHoursDue, vacationHours, salary, start, end, abort, 
+            ContractStatus.PREPARED, name, description, comment, frequency, 
+            hoursPerWeek, totalHoursDue, vacationHours, salary, start, end, abort, 
             workingDaysPerWeek, vacationDaysPerYear);
         em.persist(c); 
         em.flush();
@@ -66,11 +66,10 @@ public class ContractAccess {
     public ContractEntity setContractStatus(long id, ContractStatus status) {
         ContractEntity c = em.find(ContractEntity.class, id);
         c.setStatus(status);
-        em.merge(c);
-        return em.find(ContractEntity.class, id);
+        return em.merge(c);
     }
     
-    public ContractEntity updateContract(long id, Date start, Date end, 
+    public ContractEntity updateContract(long id, LocalDate start, LocalDate end, 
             TimeSheetFrequency frequency, int hoursPerWeek, int totalHoursDue,
             int workingDaysPerWeek, int vacationDaysPerYear) {
         ContractEntity c = em.find(ContractEntity.class, id);
@@ -83,5 +82,16 @@ public class ContractAccess {
         c.setVacationDaysPerYear(vacationDaysPerYear);
         em.merge(c);
         return em.find(ContractEntity.class, id);
+    }
+    
+    public void abortContract(long id) {
+        ContractEntity c = em.find(ContractEntity.class, id);
+        c.setAbort(LocalDate.now());
+        c.setStatus(ContractStatus.ABORTED);
+    }
+    
+    public void deleteContract(long id) {
+        ContractEntity c = em.find(ContractEntity.class, id);
+        em.remove(c);
     }
 }

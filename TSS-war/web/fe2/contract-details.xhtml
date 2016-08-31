@@ -21,11 +21,15 @@
 
         <ui:define name="content">
             <!-- Content area -->
-            <h1>${msg.contract}
-                <b:commandButton value="Edit" action="#{contractDetailsBean.edit()}" look="warning" rendered="#{not contractDetailsBean.editmode and contractDetailsBean.editContractAllowed}"><b:iconAwesome name="pencil" /></b:commandButton>
-                <b:commandButton value="Save" action="#{contractDetailsBean.save()}" look="warning" rendered="#{contractDetailsBean.editmode and contractDetailsBean.editContractAllowed}"><b:iconAwesome name="save" /></b:commandButton>
-                <b:commandButton value="Start contract" action="#{contractDetailsBean.startContract()}" look="success" rendered="#{contractDetailsBean.editContractAllowed}" style="margin-left: 10px"><b:iconAwesome name="chevron-circle-right" /></b:commandButton>
+            <h1>#{contractDetailsBean.contract.name}
             </h1>
+            <b:buttonGroup rendered="#{contractDetailsBean.editContractAllowed or contractDetailsBean.abortContractAllowed}">
+                <b:commandButton value="Start contract" action="#{contractDetailsBean.startContract()}" look="success" iconAwesome="chevron-circle-right" rendered="#{contractDetailsBean.editContractAllowed}"/>
+                <b:commandButton value="Abort contract" action="#{contractDetailsBean.abortContract()}" look="danger" rendered="#{contractDetailsBean.abortContractAllowed}" iconAwesome="chevron-circle-right"/>
+                <b:commandButton value="Edit" action="#{contractDetailsBean.edit()}" look="warning" rendered="#{not contractDetailsBean.editmode and contractDetailsBean.editContractAllowed}" iconAwesome="pencil"/>
+                <b:commandButton value="Save" action="#{contractDetailsBean.save()}" look="warning" rendered="#{contractDetailsBean.editmode and contractDetailsBean.editContractAllowed}" iconAwesome="save"/>
+                <b:commandButton value="Delete contract" action="#{contractDetailsBean.deleteContract()}" look="danger" rendered="#{contractDetailsBean.editContractAllowed}" iconAwesome="chevron-circle-right"/>
+            </b:buttonGroup>
             <hr/>
             <b:row styleClass="table-responsive">
                 <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.contract}" var="c">
@@ -47,21 +51,13 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Start" /></f:facet>
-                        <h:outputText value="#{c.start}" rendered="#{not contractDetailsBean.editmode}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" />
-                        </h:outputText>
-                        <h:inputTextarea value="#{c.start}" rendered="#{contractDetailsBean.editmode}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" />
-                        </h:inputTextarea>
+                        <h:outputText converter="localDateTimeConverter" value="#{c.start}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea converter="localDateTimeConverter" value="#{c.start}" rendered="#{contractDetailsBean.editmode}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="End" /></f:facet>
-                        <h:outputText value="#{c.end}" rendered="#{not contractDetailsBean.editmode}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" />
-                        </h:outputText>
-                        <h:inputTextarea value="#{c.end}" rendered="#{contractDetailsBean.editmode}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" />
-                        </h:inputTextarea>
+                        <h:outputText converter="localDateTimeConverter" value="#{c.end}" rendered="#{not contractDetailsBean.editmode}"/>
+                        <h:inputTextarea converter="localDateTimeConverter" value="#{c.end}" rendered="#{contractDetailsBean.editmode}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Frequency" /></f:facet>
@@ -94,12 +90,11 @@
                     </h:column>
                 </h:dataTable>
             </b:row>
-            <h1>${msg.timesheets}
-                <b:commandButton value="Add" action="return false;" look="primary"><b:iconAwesome name="plus" /></b:commandButton>
-            </h1>
+            <h1>${msg.timesheets}</h1>
             <hr/>
-            <b:row styleClass="table-responsive">
-                <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.timeSheets}" var="t" rows="15">
+            <h2><h:outputText value="(No timesheets)" rendered="#{not contractDetailsBean.hasTimeSheets}"/></h2>
+            <b:row styleClass="table-responsive" rendered="#{contractDetailsBean.hasTimeSheets}">
+                <h:dataTable styleClass="table table-striped" value="#{contractDetailsBean.timeSheets}" var="t">
                     <h:column>
                         <f:facet name="header"><h:outputText value="#" /></f:facet>
                         <h:outputLink value="timesheet-details.xhtml">
@@ -117,15 +112,11 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Start" /></f:facet>
-                        <h:outputText value="#{t.start}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" />
-                        </h:outputText>
+                        <h:outputText converter="localDateTimeConverter" value="#{t.start}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="End" /></f:facet>
-                        <h:outputText value="#{t.end}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" />
-                        </h:outputText>
+                        <h:outputText converter="localDateTimeConverter" value="#{t.end}"/>
                     </h:column>
                 </h:dataTable>
             </b:row>

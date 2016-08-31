@@ -4,7 +4,7 @@
  */
 package org.alpha.tss.logic.dao;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,7 +21,7 @@ public class TimeSheetAccess {
     private EntityManager em;
     
     public TimeSheetEntity createTimeSheet(ContractEntity contract, 
-            TimeSheetStatus status, Date start, Date end, Integer hoursDue) {
+            TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue) {
         
         TimeSheetEntity t = new TimeSheetEntity(contract, status, start, end,
             hoursDue);

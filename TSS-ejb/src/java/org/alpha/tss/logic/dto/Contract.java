@@ -4,7 +4,7 @@
  */
 package org.alpha.tss.logic.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Currency;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.alpha.tss.entities.ContractStatus;
@@ -24,9 +24,9 @@ public class Contract extends AbstractTransferObject {
     private Integer totalHoursDue;
     private Integer vacationHours;
     private Currency salary;
-    private Date start;
-    private Date end;
-    private Date abort;
+    private LocalDate start;
+    private LocalDate end;
+    private LocalDate abort;
     private Integer workingDaysPerWeek;
     private Integer vacationDaysPerYear;
     
@@ -37,7 +37,7 @@ public class Contract extends AbstractTransferObject {
             ContractStatus contractStatus, String name, String description,
             String comment, TimeSheetFrequency frequency, Integer hoursPerWeek,
             Integer totalHoursDue, Integer vacationHours, Currency salary,
-            Date start, Date end, Date abort, Integer workingDaysPerWeek,
+            LocalDate start, LocalDate end, LocalDate abort, Integer workingDaysPerWeek,
             Integer vacationDaysPerYear)
     {
         super(id);
@@ -138,27 +138,27 @@ public class Contract extends AbstractTransferObject {
         this.salary = salary;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
-    public Date getAbort() {
+    public LocalDate getAbort() {
         return abort;
     }
 
-    public void setAbort(Date abort) {
+    public void setAbort(LocalDate abort) {
         this.abort = abort;
     }
 
