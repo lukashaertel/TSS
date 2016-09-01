@@ -59,4 +59,9 @@ public class TimeSheetAccess {
                 .setParameter("contractId", id)
                 .getResultList();
     }
+    
+    public void deleteTimeSheet(long id) {
+        TimeSheetEntity t = em.find(TimeSheetEntity.class, id);
+        em.remove(t);
+    }
 }

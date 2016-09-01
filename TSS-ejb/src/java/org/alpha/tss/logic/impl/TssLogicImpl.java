@@ -158,10 +158,10 @@ public class TssLogicImpl implements TssLogic {
         if (c.getStatus() != ContractStatus.STARTED)
             return false;
 
-        List<TimeSheetEntity> t = ta.getTimeSheetsByContractId(id);
+        List<TimeSheetEntity> timeSheets = ta.getTimeSheetsByContractId(id);
 
-        for (Iterator<TimeSheetEntity> i = t.iterator(); i.hasNext();) {
-            TimeSheetStatus status = i.next().getStatus();
+        for (TimeSheetEntity t : timeSheets) {
+            TimeSheetStatus status = t.getStatus();
             if (status != TimeSheetStatus.SIGNED_BY_SUPERVISOR
                     && status != TimeSheetStatus.IN_PROGRESS)
                 return false;
@@ -173,7 +173,14 @@ public class TssLogicImpl implements TssLogic {
     //@RolesAllowed({"assistant", "supervisor"})
     public boolean abortContract(long id) {
         if (isAbortContractAllowed(id)) {
+            // Set status and abort date
             ca.abortContract(id);
+            // Delete all timesheets IN PROGRESS
+            List<TimeSheetEntity> timeSheets = ta.getTimeSheetsByContractId(id);
+            for (TimeSheetEntity t : timeSheets) {
+                if (t.getStatus() == TimeSheetStatus.IN_PROGRESS)
+                    ta.deleteTimeSheet(t.getId());
+            }
             return true;
         }
         return false;
