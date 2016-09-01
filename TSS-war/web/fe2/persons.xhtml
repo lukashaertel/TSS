@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="app.xhtml">
+        <ui:define name="content">
+            <!-- Content area -->
+            <h1>Persons
+                <b:commandButton value="Add" action="#{sampleFillBean.samplePerson()}" look="primary" iconAwesome="plus"/>
+            </h1>
+            <hr/>
+            <h:dataTable styleClass="table table-striped" value="#{personListBean.persons}" var="p" rows="15">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="#" /></f:facet>
+                    <h:outputText value="#{p.id}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Name" /></f:facet>
+                    <h:outputLink value="person-details.xhtml">
+                        <h:outputText value="#{p.lastname}" />, <h:outputText value="#{p.firstname}" />
+                        <f:param name="personId" value="${p.id}" />
+                    </h:outputLink>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Email" /></f:facet>
+                    <h:outputLink value="mailto:#{p.email}">
+                        <h:outputText value="#{p.email}" />
+                    </h:outputLink>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Title" /></f:facet>
+                    <h:outputText value="#{p.title}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"><h:outputText value="DOB" /></f:facet>
+                    <h:outputText converter="localDateTimeConverter" value="#{p.dateOfBirth}" />
+                </h:column>
+            </h:dataTable>
+        </ui:define>
+    </ui:composition>
+</html>

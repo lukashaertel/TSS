@@ -14,6 +14,7 @@ import org.alpha.tss.entities.TimeSheetEntity;
 import org.alpha.tss.entities.TimeSheetFrequency;
 import org.alpha.tss.entities.TimeSheetStatus;
 import org.alpha.tss.logic.dto.Contract;
+import org.alpha.tss.logic.dto.Person;
 import org.alpha.tss.logic.dto.TimeSheet;
 import org.alpha.tss.logic.dto.Project;
 import org.alpha.tss.logic.dto.TimeSheetEntry;
@@ -65,4 +66,11 @@ public interface TssLogic {
     public Project getProjectById(long id);
     public List<Project> getProjects();
     public Project createProject(String name);
+    
+    /*
+     * Person
+     */
+    public Person getPersonById(long id);
+    public List<Person> getPersons();
+    public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth);
 }

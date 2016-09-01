@@ -20,16 +20,19 @@ import javax.ejb.Stateless;
 import org.alpha.tss.entities.ContractEntity;
 import org.alpha.tss.entities.ContractStatus;
 import org.alpha.tss.entities.ContractType;
+import org.alpha.tss.entities.PersonEntity;
 import org.alpha.tss.entities.TimeSheetEntity;
 import org.alpha.tss.entities.TimeSheetFrequency;
 import org.alpha.tss.entities.TimeSheetStatus;
 import org.alpha.tss.entities.ProjectEntity;
 import org.alpha.tss.logic.TssLogic;
 import org.alpha.tss.logic.dao.ContractAccess;
+import org.alpha.tss.logic.dao.PersonAccess;
 import org.alpha.tss.logic.dao.TimeSheetAccess;
 import org.alpha.tss.logic.dao.TimeSheetEntryAccess;
 import org.alpha.tss.logic.dao.ProjectAccess;
 import org.alpha.tss.logic.dto.Contract;
+import org.alpha.tss.logic.dto.Person;
 import org.alpha.tss.logic.dto.TimeSheet;
 import org.alpha.tss.logic.dto.Project;
 import org.alpha.tss.logic.dto.TimeSheetEntry;
@@ -45,6 +48,8 @@ public class TssLogicImpl implements TssLogic {
     private TimeSheetEntryAccess tea;
     @EJB
     private ProjectAccess pa;
+    @EJB
+    private PersonAccess pea;
     
     @Override
     //@RolesAllowed("ACCTMGR")
@@ -292,4 +297,36 @@ public class TssLogicImpl implements TssLogic {
     public void deleteTimeSheetsByContractId(long contractId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth) {
+      PersonEntity p = pea.createPerson(firstname, lastname, email, title, dateOfBirth);
+      return createPersonTO(p);
+    }
+    
+    //@RolesAllowed("ACCTMGR")
+    private Person createPersonTO(PersonEntity p) {
+        if (p == null) {
+            return null;
+        }
+        return new Person(p.getId(), p.getFirstname(), p.getLastname(), p.getEmail(), p.getTitle(), p.getDateOfBirth());
+    }
+
+    @Override
+    public Person getPersonById(long id) {
+        PersonEntity p = pea.getPersonById(id);
+        return createPersonTO(p);
+    }
+
+    @Override
+    public List<Person> getPersons() {
+        List<Person> result = new ArrayList<>();
+        for (PersonEntity p : pea.getPersons()) {
+            result.add(createPersonTO(p));
+        }
+        return result;
+    }
+    
+    
+    
 }

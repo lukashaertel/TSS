@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- Parameter definition for contract details view -->
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="personId" required="true" name="personId" value="#{personDetailsBean.id}">
+                <f:validateLongRange minimum="0"/>
+            </f:viewParam>
+        </f:metadata>
+    </f:view>
+
+    <ui:composition template="app.xhtml">
+        <ui:define name="extra-nav-left">
+            <b:navLink value="#{personDetailsBean.person.lastname}" icon-awesome="user" href="#" active="true" />
+        </ui:define>
+
+        <ui:define name="content">
+            <!-- Content area -->
+            <h1>#{contractDetailsBean.contract.name}</h1>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{personDetailsBean.person}" var="p">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{p.id}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Name" /></f:facet>
+                        <h:outputText value="#{p.lastname}" />, <h:outputText value="#{p.firstname}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Email" /></f:facet>
+                        <h:outputLink value="mailto:#{p.email}">
+                            <h:outputText value="#{p.email}" />
+                        </h:outputLink>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Title" /></f:facet>
+                        <h:outputText value="#{p.title}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="DOB" /></f:facet>
+                        <h:outputText converter="localDateTimeConverter" value="#{p.dateOfBirth}" />
+                    </h:column>
+                </h:dataTable>
+            </b:row>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -22,6 +22,7 @@ import org.alpha.tss.entities.TimeSheetFrequency;
 import org.alpha.tss.logic.ReminderBean;
 import org.alpha.tss.logic.TssLogic;
 import org.alpha.tss.logic.dto.Contract;
+import org.alpha.tss.logic.dto.Person;
 import org.alpha.tss.logic.dto.Project;
 import org.alpha.tss.logic.dto.ProjectEntry;
 
@@ -56,19 +57,21 @@ public class SampleFillBean implements Serializable {
 
         return "contract-details.xhtml?faces-redirect=true&contractId=" + contract.getId();
     }
+    
+    public String samplePerson() {
+        Person person = tssLogic.createPerson(
+                "John",
+                "Doe",
+                "johndoe@example.com",
+                null,
+                LocalDate.of(1980, 10, 10));
+
+        return "person-details.xhtml?faces-redirect=true&personId=" + person.getId();
+    }
 
     public String sampleProject() {
         Project project = tssLogic.createProject("Testprojekt");
 
         return "project-details.xhtml?faces-redirect=true&projectId=" + project.getId();
-    }
-
-    public void testSendMail() {
-        try {
-            reminderBean.collectAndSendReminders();
-        } catch (MessagingException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
-            Logger.getLogger(SampleFillBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }
