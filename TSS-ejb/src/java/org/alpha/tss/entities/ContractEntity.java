@@ -258,4 +258,46 @@ public class ContractEntity extends AbstractEntity {
     public void setTimeSheets(Set<TimeSheetEntity> timeSheets) {
         this.timeSheets = timeSheets;
     }
+
+    public SupervisorEntity getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(SupervisorEntity supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public EmployeeEntity getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeEntity employee) {
+        this.employee = employee;
+    }
+
+    public Set<AssistantEntity> getAssistants() {
+        return assistants;
+    }
+
+    public void setAssistants(Set<AssistantEntity> assistants) {
+        this.assistants = assistants;
+    }
+
+    public Set<SecretaryEntity> getSecretaries() {
+        return secretaries;
+    }
+
+    public void setSecretaries(Set<SecretaryEntity> secretaries) {
+        this.secretaries = secretaries;
+    }
+
+    public Set<ProjectEntity> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<ProjectEntity> projects) {
+        this.projects = projects;
+    }
+    
+    
 }

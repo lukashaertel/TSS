@@ -50,7 +50,7 @@ public class TssLogicImpl implements TssLogic {
     private ProjectAccess pa;
     @EJB
     private PersonAccess pea;
-    
+
     @Override
     //@RolesAllowed("ACCTMGR")
     public Contract getContractById(long id) {
@@ -58,7 +58,7 @@ public class TssLogicImpl implements TssLogic {
         result = createContractTO(ca.getContract(id));
         return result;
     }
-    
+
     @Override
     //@RolesAllowed("ACCTMGR")
     public List<Contract> getContracts() {
@@ -75,10 +75,10 @@ public class TssLogicImpl implements TssLogic {
             return null;
         }
         return new Contract(c.getId(), c.getType(), c.getStatus(), c.getName(),
-            c.getDescription(), c.getComment(), c.getFrequency(),
-            c.getHoursPerWeek(), c.getTotalHoursDue(), c.getVacationHours(),
-            c.getSalary(), c.getStart(), c.getEnd(), c.getAbort(),
-            c.getWorkingDaysPerWeek(), c.getVacationDaysPerYear());
+                c.getDescription(), c.getComment(), c.getFrequency(),
+                c.getHoursPerWeek(), c.getTotalHoursDue(), c.getVacationHours(),
+                c.getSalary(), c.getStart(), c.getEnd(), c.getAbort(),
+                c.getWorkingDaysPerWeek(), c.getVacationDaysPerYear());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class TssLogicImpl implements TssLogic {
         }
         return result;
     }
-    
+
     @Override
     //@RolesAllowed("assistant")
     public Contract createContract(ContractType contractType, String name, String description,
@@ -98,125 +98,125 @@ public class TssLogicImpl implements TssLogic {
             Integer totalHoursDue, Integer vacationHours, Currency salary,
             LocalDate start, LocalDate end, LocalDate abort, Integer workingDaysPerWeek,
             Integer vacationDaysPerWeek) {
-        ContractEntity c = ca.createContract(contractType, name, description, 
-            comment, frequency, hoursPerWeek, totalHoursDue, vacationHours, 
-            salary, start, end, abort, workingDaysPerWeek, vacationDaysPerWeek);       
-        
+        ContractEntity c = ca.createContract(contractType, name, description,
+                comment, frequency, hoursPerWeek, totalHoursDue, vacationHours,
+                salary, start, end, abort, workingDaysPerWeek, vacationDaysPerWeek);
+
         return createContractTO(c);
     }
-    
+
     @Override
     public Contract setContractStatus(long id, ContractStatus status) {
         return createContractTO(ca.setContractStatus(id, status));
     }
-    
+
     @Override
     //@RolesAllowed({"assistant", "supervisor"})
     public Contract startContract(long id) {
         // Change contract status to started
         ContractEntity c = ca.setContractStatus(id, ContractStatus.STARTED);
-        
+
         // Create calculated num of timesheets
         int numOfTimeSheets = 0;
         long days = ChronoUnit.DAYS.between(c.getStart(), c.getEnd());
-        int weeks = (int) Math.ceil(((double)days) / 7.0);
-        
+        int weeks = (int) Math.ceil(((double) days) / 7.0);
+
         switch (c.getFrequency()) {
-            case WEEKLY:                
+            case WEEKLY:
                 numOfTimeSheets = weeks;
-                
+
                 for (int i = 0; i < numOfTimeSheets; i++) {
                     LocalDate tStartDate = c.getStart().plusDays(i * 7);
                     LocalDate tEndDate;
-                    if ( i == numOfTimeSheets - 1)
+                    if (i == numOfTimeSheets - 1)
                         tEndDate = c.getEnd();
                     else
-                        tEndDate = c.getStart().plusDays((i+1)*7 - 1);
-                    ta.createTimeSheet(c, TimeSheetStatus.IN_PROGRESS, 
+                        tEndDate = c.getStart().plusDays((i + 1) * 7 - 1);
+                    ta.createTimeSheet(c, TimeSheetStatus.IN_PROGRESS,
                             tStartDate, tEndDate, c.getHoursPerWeek());
                 }
                 break;
             case MONTHLY:
-                int months = (int) Math.ceil(((double)weeks) / 4.0);
+                int months = (int) Math.ceil(((double) weeks) / 4.0);
                 numOfTimeSheets = months;
-                
+
                 for (int i = 0; i < numOfTimeSheets; i++) {
                     LocalDate tStartDate = c.getStart().withDayOfMonth(1).plusMonths(i);
                     LocalDate tEndDate = tStartDate.with(lastDayOfMonth());
-                    ta.createTimeSheet(c, TimeSheetStatus.IN_PROGRESS, 
+                    ta.createTimeSheet(c, TimeSheetStatus.IN_PROGRESS,
                             tStartDate, tEndDate, c.getHoursPerWeek());
                 }
                 break;
         }
-        
+
         return createContractTO(c);
-    }    
-    
+    }
+
     @Override
     public boolean isAbortContractAllowed(long id) {
         ContractEntity c = ca.getContract(id);
         if (c.getStatus() != ContractStatus.STARTED)
             return false;
-        
+
         List<TimeSheetEntity> t = ta.getTimeSheetsByContractId(id);
-        
-        for(Iterator<TimeSheetEntity> i = t.iterator(); i.hasNext();) {
+
+        for (Iterator<TimeSheetEntity> i = t.iterator(); i.hasNext();) {
             TimeSheetStatus status = i.next().getStatus();
-            if(status != TimeSheetStatus.SIGNED_BY_SUPERVISOR &&
-                    status != TimeSheetStatus.IN_PROGRESS)
+            if (status != TimeSheetStatus.SIGNED_BY_SUPERVISOR
+                    && status != TimeSheetStatus.IN_PROGRESS)
                 return false;
         }
         return true;
     }
-    
+
     @Override
     //@RolesAllowed({"assistant", "supervisor"})
     public boolean abortContract(long id) {
-        if(isAbortContractAllowed(id)) {
+        if (isAbortContractAllowed(id)) {
             ca.abortContract(id);
             return true;
         }
         return false;
     }
-    
+
     @Override
     //@RolesAllowed("supervisor")
     public Contract updateContract(Contract c) {
         // Update only allowed when contract status equals PREPARED
         if (c.getContractStatus() != ContractStatus.PREPARED)
             return c;
-        
+
         return createContractTO(ca.updateContract(c.getId(), c.getStart(),
                 c.getEnd(), c.getFrequency(), c.getHoursPerWeek(),
-                c.getTotalHoursDue(), c.getWorkingDaysPerWeek(), 
+                c.getTotalHoursDue(), c.getWorkingDaysPerWeek(),
                 c.getVacationDaysPerYear()));
     }
-    
+
     @Override
     //@RolesAllowed("administrator")
     public void deleteContract(long id) {
         ca.deleteContract(id);
     }
-    
+
     @Override
     //@RolesAllowed("assistant")
-    public TimeSheet createTimeSheet(ContractEntity contract, 
+    public TimeSheet createTimeSheet(ContractEntity contract,
             TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue) {
         TimeSheetEntity t = ta.createTimeSheet(contract, status, start, end,
                 hoursDue);
         return new TimeSheet(t.getId(), t.getStatus(), t.getStart(), t.getEnd(),
                 t.getHoursDue());
     }
-    
+
     //@RolesAllowed("ACCTMGR")
     private TimeSheet createTimeSheetTO(TimeSheetEntity t) {
         if (t == null) {
             return null;
         }
         return new TimeSheet(t.getId(), t.getStatus(), t.getStart(), t.getEnd(),
-            t.getHoursDue());
+                t.getHoursDue());
     }
-    
+
     @Override
     //@RolesAllowed("ACCTMGR")
     public List<TimeSheet> getTimeSheetsFiltered(String filter) {
@@ -234,6 +234,15 @@ public class TssLogicImpl implements TssLogic {
     }
 
     @Override
+    public List<TimeSheet> getTimeSheets() {
+        List<TimeSheet> result = new ArrayList<>();
+        for (TimeSheetEntity t : ta.getTimeSheets()) {
+            result.add(createTimeSheetTO(t));
+        }
+        return result;
+    }
+
+    @Override
     public List<TimeSheet> getTimeSheetsByContractId(long contractId) {
         List<TimeSheet> result = new ArrayList<>();
         for (TimeSheetEntity t : ta.getTimeSheetsByContractId(contractId)) {
@@ -241,30 +250,30 @@ public class TssLogicImpl implements TssLogic {
         }
         return result;
     }
-    
+
     @Override
     public Project createProject(String name) {
         ProjectEntity p = pa.createProject(name);
         return createProjectTO(p);
     }
-    
+
     //@RolesAllowed("ACCTMGR")
     private Project createProjectTO(ProjectEntity p) {
         if (p == null) {
             return null;
         }
-        return new Project(p.getId(), p.getName(), p.getContracts(), 
+        return new Project(p.getId(), p.getName(), p.getContracts(),
                 p.getEntries(), p.getOwners());
     }
-    
+
     @Override
     public Project getProjectById(long id) {
         ProjectEntity p = pa.getProjectById(id);
         return createProjectTO(p);
     }
-    
+
     @Override
-    public List<Project> getProjects(){
+    public List<Project> getProjects() {
         List<Project> result = new ArrayList<>();
         for (ProjectEntity p : pa.getProjects()) {
             result.add(createProjectTO(p));
@@ -273,7 +282,7 @@ public class TssLogicImpl implements TssLogic {
     }
 
     @Override
-    public TimeSheetEntry createTimeSheetEntry(TimeSheetEntity timesheet, 
+    public TimeSheetEntry createTimeSheetEntry(TimeSheetEntity timesheet,
             String descriptionOfWork, String comment, LocalDate date, Integer hours) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -300,10 +309,10 @@ public class TssLogicImpl implements TssLogic {
 
     @Override
     public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth) {
-      PersonEntity p = pea.createPerson(firstname, lastname, email, title, dateOfBirth);
-      return createPersonTO(p);
+        PersonEntity p = pea.createPerson(firstname, lastname, email, title, dateOfBirth);
+        return createPersonTO(p);
     }
-    
+
     //@RolesAllowed("ACCTMGR")
     private Person createPersonTO(PersonEntity p) {
         if (p == null) {
@@ -326,7 +335,5 @@ public class TssLogicImpl implements TssLogic {
         }
         return result;
     }
-    
-    
-    
+
 }

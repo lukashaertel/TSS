@@ -47,6 +47,7 @@ public interface TssLogic {
     public TimeSheet createTimeSheet(ContractEntity contract, 
             TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue);
     public TimeSheet getTimeSheetById(long id);
+    public List<TimeSheet> getTimeSheets();
     public List<TimeSheet> getTimeSheetsByContractId(long contractId);
     public List<TimeSheet> getTimeSheetsFiltered(String filter);
     public void deleteTimeSheetById(long id);

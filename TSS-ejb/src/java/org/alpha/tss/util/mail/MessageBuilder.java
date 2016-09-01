@@ -27,7 +27,7 @@ public class MessageBuilder {
     /**
      * Default encoding for the messages
      */
-    public static final String DEFAULT_ENCODING = "UTF-8";
+    public static final String DEFAULT_ENCODING = "utf-8";
 
     /**
      * Message to be initialized on
@@ -171,6 +171,18 @@ public class MessageBuilder {
     }
 
     /**
+     * Assigns a body to the mail as HTML code
+     *
+     * @param text The message body to use
+     * @return Returns the builder itself
+     * @throws MessagingException Thrown if setting the text caused a problem
+     */
+    public MessageBuilder html(String text) throws MessagingException {
+        message.setContent(text, "text/html; charset=" + encoding);
+        return this;
+    }
+
+    /**
      * Assigns a sent-date of the mail
      *
      * @param date The date to use
@@ -269,7 +281,9 @@ public class MessageBuilder {
 
     /**
      * Fills in the remaining fields, then sends the mail via {@link Transport}
-     * @throws MessagingException Thrown if setting the remaining fields caused a problem
+     *
+     * @throws MessagingException Thrown if setting the remaining fields caused
+     * a problem
      */
     public void send() throws MessagingException {
         if (to != null)
