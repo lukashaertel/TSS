@@ -16,7 +16,7 @@
 
     <ui:composition template="app.xhtml">
         <ui:define name="extra-nav-left">
-            <b:navLink value="#{personDetailsBean.person.lastname}" icon-awesome="user" href="#" active="true" />
+            <b:navLink value="#{personDetailsBean.person.lastname}, #{personDetailsBean.person.firstname}" icon-awesome="user" href="#" active="true" />
         </ui:define>
 
         <ui:define name="content">
