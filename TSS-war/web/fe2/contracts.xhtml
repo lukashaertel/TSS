@@ -9,9 +9,50 @@
         <ui:define name="content">
             <!-- Content area -->
             <h1>${msg.contracts}
-                <b:commandButton value="Add" action="#{sampleFillBean.sampleContract()}" look="primary" iconAwesome="plus"/>
+                <b:button value="Create" look="primary" onclick="$('.modalPseudoClass').modal();return false;" icon-awesome="plus"/>
             </h1>
             <hr/>
+            <b:modal id="amodal" title="Modal Example" styleClass="modalPseudoClass">
+                <b:container fluid="true">
+                        <b:row>
+                            <b:inputText span="12" placeholder="Name" value="#{contractCRUDBean.name}"/>
+                        </b:row>
+                        <b:row>
+                            <b:inputText span="12" placeholder="Description" value="#{contractCRUDBean.description}"/>
+                        </b:row>
+                        <b:row>
+                            <b:inputText span="12" placeholder="Comment" value="#{contractCRUDBean.comment}"/>
+                        </b:row>
+                        <b:row>
+                            <b:selectOneMenu large-screen="full-width" onchange="submit()" style="margin-right:20px" value="#{contractCRUDBean.contractType}">                            
+                                <f:selectItem itemValue="FIXED_PRICE" itemLabel="Fixed Price"/>
+                                <f:selectItem itemValue="FIXED_HOURS" itemLabel="Fixed Hours"/>
+                                <f:selectItem itemValue="HOURS_PER_WEEK" itemLabel="Hours Per Week"/>
+                            </b:selectOneMenu>
+                        </b:row>
+                        <b:row>
+                            <b:selectOneMenu large-screen="full-width" onchange="submit()" style="margin-right:20px" value="#{contractCRUDBean.frequency}">
+                                <f:selectItem itemValue="WEEKLY" itemLabel="Weekly"/>
+                                <f:selectItem itemValue="MONTHLY" itemLabel="Monthly"/>
+                            </b:selectOneMenu>
+                        </b:row>
+                        <b:row>
+                            <b:inputText span="12" placeholder="Hours per week" value="#{contractCRUDBean.hoursPerWeek}"/>
+                        </b:row>
+                        <b:row>
+                            <b:inputText span="12" placeholder="Working days per week" value="#{contractCRUDBean.workingDaysPerWeek}"/>
+                        </b:row>
+                        <b:row>
+                            <b:datepicker tooltip="startDate" large-screen="full-width" value="#{contractCRUDBean.start}"/>
+                        </b:row>
+                        <b:row>
+                            <b:datepicker tooltip="endDate" large-screen="full-width" value="#{contractCRUDBean.end}"/>
+                        </b:row>
+                    </b:container>
+                <f:facet name="footer">
+                    <b:commandButton value="Create" look="primary" onclick="amodal.dismiss();" action="#{contractCRUDBean.createContract()}"/>
+                </f:facet>
+            </b:modal>
             <h:dataTable styleClass="table table-striped" value="#{contractListBean.contracts}" var="c" rows="15">
                 <h:column>
                     <f:facet name="header"><h:outputText value="#" /></f:facet>
