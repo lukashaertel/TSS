@@ -52,25 +52,22 @@
             </h1>
             <hr/>
             <b:modal id="amodal" title="TimeSheetEntry Creation" styleClass="modalPseudoClass">
-                <b:container fluid="true">
+                <b:container fluid="true">                    
                         <b:row>
-                            <b:inputText span="12" placeholder="Description of work" value=""/>
+                            <b:inputText span="12" placeholder="Description of work" value="#{timeSheetEntryCRUDBean.descriptionOfWork}"/>
                         </b:row>
                         <b:row>
-                            <b:inputText span="12" placeholder="Comment" value=""/>
-                        </b:row>
-                        <b:row>
-                            <b:inputText span="12" placeholder="Comment" value=""/>
+                            <b:inputText span="12" placeholder="Comment" value="#{timeSheetEntryCRUDBean.comment}"/>
                         </b:row>                        
                         <b:row>
-                            <b:inputText span="12" placeholder="Hours" value=""/>
+                            <b:inputText span="12" placeholder="Hours" value="#{timeSheetEntryCRUDBean.hours}"/>
                         </b:row>
                         <b:row>
-                            <b:datepicker tooltip="Date" large-screen="full-width" value=""/>
+                            <b:datepicker tooltip="Date" large-screen="full-width" value="#{timeSheetEntryCRUDBean.date}"/>
                         </b:row>
                     </b:container>
                 <f:facet name="footer">
-                    <b:commandButton value="Create" look="primary" onclick="amodal.dismiss();" action="return false;"/>
+                    <b:commandButton value="Create" look="primary" onclick="amodal.dismiss();" action="#{timeSheetEntryCRUDBean.createTimeSheetEntry(timeSheetDetailsBean.id)}"/>
                 </f:facet>
             </b:modal>
             <b:row styleClass="table-responsive">
