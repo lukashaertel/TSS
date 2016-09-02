@@ -51,7 +51,7 @@ public class ContractCRUDBean implements Serializable {
         LocalDate startDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
 
         Instant instant_end = Instant.ofEpochMilli(end.getTime());
-        LocalDate endDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = LocalDateTime.ofInstant(instant_end, ZoneId.systemDefault()).toLocalDate();
         
         Contract contract = tssLogic.createContract(
                 this.contractType,
