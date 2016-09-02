@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Iterator;
+import java.util.Locale;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -293,14 +294,14 @@ public class TssLogicImpl implements TssLogic {
         if (t == null) {
             return null;
         }
-        return new TimeSheetEntry(t.getId(), t.getDescriptionOfWork(), 
+        return new TimeSheetEntry(t.getId(), t.getDescriptionOfWork(),
                 t.getComment(), t.getDate(), t.getHours());
     }
 
     @Override
     public TimeSheetEntry createTimeSheetEntry(long timeSheetId,
             String descriptionOfWork, String comment, LocalDate date, Integer hours) {
-        TimeSheetEntity t =  ta.getTimeSheetById(timeSheetId);
+        TimeSheetEntity t = ta.getTimeSheetById(timeSheetId);
         TimeSheetEntryEntity te = tea.createTimeSheetEntry(t, descriptionOfWork,
                 comment, date, hours);
         return createTimeSheetEntryTO(te);
@@ -315,7 +316,7 @@ public class TssLogicImpl implements TssLogic {
     public List<TimeSheetEntry> getTimeSheetEntriesByContractId(long contractId) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public List<TimeSheetEntry> getTimeSheetEntriesByTimeSheetId(long timeSheetId) {
         List<TimeSheetEntry> result = new ArrayList<>();
@@ -336,8 +337,8 @@ public class TssLogicImpl implements TssLogic {
     }
 
     @Override
-    public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth) {
-        PersonEntity p = pea.createPerson(firstname, lastname, email, title, dateOfBirth);
+    public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth, Locale preferredLocale, boolean groupReminders) {
+        PersonEntity p = pea.createPerson(firstname, lastname, email, title, dateOfBirth, preferredLocale, groupReminders);
         return createPersonTO(p);
     }
 
@@ -346,7 +347,7 @@ public class TssLogicImpl implements TssLogic {
         if (p == null) {
             return null;
         }
-        return new Person(p.getId(), p.getFirstname(), p.getLastname(), p.getEmail(), p.getTitle(), p.getDateOfBirth());
+        return new Person(p.getId(), p.getFirstname(), p.getLastname(), p.getEmail(), p.getTitle(), p.getDateOfBirth(), p.getPreferredLocale(), p.isGroupReminders());
     }
 
     @Override
@@ -360,7 +361,7 @@ public class TssLogicImpl implements TssLogic {
         PersonEntity p = pea.getPersonByMail(mail);
         return createPersonTO(p);
     }
-    
+
     @Override
     public List<Person> getPersons() {
         List<Person> result = new ArrayList<>();

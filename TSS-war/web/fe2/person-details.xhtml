@@ -21,8 +21,8 @@
 
         <ui:define name="content">
             <!-- Content area -->
-            <h1>#{contractDetailsBean.contract.name}</h1>
-            <b:row styleClass="table-responsive">
+            <h1>#{personDetailsBean.person.lastname}</h1>
+            <b:row>
                 <h:dataTable styleClass="table table-striped" value="#{personDetailsBean.person}" var="p">
                     <h:column>
                         <f:facet name="header"><h:outputText value="#" /></f:facet>
@@ -49,6 +49,16 @@
                     <h:column>
                         <f:facet name="header"><h:outputText value="DOB" /></f:facet>
                         <h:outputText converter="localDateTimeConverter" value="#{p.dateOfBirth}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Preferred locale" /></f:facet>
+                        <h:outputText value="#{p.preferredLocale.getDisplayName(localeBean.locale)}" />
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Group reminders" /></f:facet>
+                        <b:iconAwesome  name="check" rendered="#{p.groupReminders}" />
                     </h:column>
                 </h:dataTable>
             </b:row>

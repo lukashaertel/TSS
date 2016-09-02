@@ -5,6 +5,7 @@
 package org.alpha.tss.logic.dto;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -21,17 +22,23 @@ public class Person extends AbstractTransferObject {
     private String title;
 
     private LocalDate dateOfBirth;
+    
+    private Locale preferredLocale;
+    
+    private boolean groupReminders;
 
     public Person() {
     }
 
-    public Person(long id, String firstname, String lastname, String email, String title, LocalDate dateOfBirth) {
+    public Person(long id, String firstname, String lastname, String email, String title, LocalDate dateOfBirth, Locale preferredLocale,boolean groupReminders) {
         super(id);
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.title = title;
         this.dateOfBirth = dateOfBirth;
+        this.preferredLocale = preferredLocale;
+        this.groupReminders =groupReminders;
     }
 
     public String getFirstname() {
@@ -73,4 +80,23 @@ public class Person extends AbstractTransferObject {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public Locale getPreferredLocale() {
+        return preferredLocale;
+    }
+
+    public void setPreferredLocale(Locale preferredLocale) {
+        this.preferredLocale = preferredLocale;
+    }
+
+    public boolean isGroupReminders() {
+        return groupReminders;
+    }
+
+    public void setGroupReminders(boolean groupReminders) {
+        this.groupReminders = groupReminders;
+    }
+    
+    
+    
 }

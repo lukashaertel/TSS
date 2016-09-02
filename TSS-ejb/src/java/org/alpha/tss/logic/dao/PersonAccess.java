@@ -7,6 +7,7 @@ package org.alpha.tss.logic.dao;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -24,8 +25,8 @@ public class PersonAccess {
     @PersistenceContext(unitName = "TSS-PU")
     private EntityManager em;
 
-    public PersonEntity createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth) {
-        PersonEntity p = new PersonEntity(firstname, lastname, email, title, dateOfBirth);
+    public PersonEntity createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth, Locale preferredLocale, boolean groupReminders) {
+        PersonEntity p = new PersonEntity(firstname, lastname, email, title, dateOfBirth, preferredLocale, groupReminders);
         em.persist(p);
         em.flush();
         return p;
@@ -40,7 +41,7 @@ public class PersonAccess {
             return null;
         }
     }
-    
+
     public PersonEntity getPersonByMail(String mail) {
         try {
             return em.createNamedQuery("PersonEntity.getPersonByMail", PersonEntity.class)

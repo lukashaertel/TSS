@@ -159,20 +159,6 @@ public class ReminderBean {
     }
 
     /**
-     * Returns true if a person desires grouped instead of individual reminders
-     *
-     * @param person The person to evaluate
-     * @return Returns true if grouping is desired
-     */
-    private boolean groupRemindersFor(Person person) {
-        return false;
-    }
-
-    private Locale localeFor(Person person) {
-        return new Locale("en");
-    }
-
-    /**
      * Processes a set of reminders by dispatching them grouped or individually
      *
      * @param reminders The reminders to dispatch
@@ -183,7 +169,7 @@ public class ReminderBean {
             // Do not remind if erroneous input of empty sets
             if (!entry.getValue().isEmpty()) {
                 // Select the appropriate sending method
-                if (groupRemindersFor(entry.getKey()))
+                if (entry.getKey().isGroupReminders())
                     sendGroupedReminders(entry.getKey(), entry.getValue());
                 else
                     sendIndividualReminders(entry.getKey(), entry.getValue());
@@ -197,7 +183,7 @@ public class ReminderBean {
      * @param reminders The reminders
      */
     public /* private */ void sendIndividualReminders(Person person, Set<Reminder> reminders) {
-        ReminderMessages messages = new ReminderMessages(localeFor(person),
+        ReminderMessages messages = new ReminderMessages(person.getPreferredLocale(),
                 "contract-details.xhtml?contractId={0}",
                 "timesheet-details.xhtml?timeSheetId={0}");
 
@@ -266,8 +252,8 @@ public class ReminderBean {
      * @param person The person to remind for
      * @param reminders The reminders
      */
-    public /* private */  void sendGroupedReminders(Person person, Set<Reminder> reminders) {
-        ReminderMessages messages = new ReminderMessages(localeFor(person),
+    public /* private */ void sendGroupedReminders(Person person, Set<Reminder> reminders) {
+        ReminderMessages messages = new ReminderMessages(person.getPreferredLocale(),
                 "contract-details.xhtml?contractId={0}",
                 "timesheet-details.xhtml?timeSheetId={0}");
 

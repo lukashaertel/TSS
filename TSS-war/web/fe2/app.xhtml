@@ -10,7 +10,6 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <f:view locale="#{localeBean.locale}" />
     <h:head>
         <title><ui:insert name="title">TimeSheet System</ui:insert></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -89,54 +88,56 @@ and open the template in the editor.
     </h:head>
 
     <h:body>
-        <h:form id="navHost">
-            <b:navBar brand="TSS" brandHref="">
-                <b:navbarLinks>
-                    <!-- Link to the contracts and projects list, can be active -->
-                    <b:navLink value="#{msg.contracts}" icon-awesome="hourglass" href="contracts.xhtml" 
-                               active="#{navBarBean.isActive(component)}" />
+        <f:view locale="#{localeBean.locale}">
+            <h:form id="nav">
+                <b:navBar brand="TSS" brandHref="">
+                    <b:navbarLinks>
+                        <!-- Link to the contracts and projects list, can be active -->
+                        <b:navLink value="#{msg.contracts}" icon-awesome="hourglass" href="contracts.xhtml" 
+                                   active="#{pagesBean.isActive(component)}" />
 
-                    <b:navLink value="#{msg.projects}" icon-awesome="industry" href="projects.xhtml"
-                               active="#{navBarBean.isActive(component)}" />
+                        <b:navLink value="#{msg.projects}" icon-awesome="industry" href="projects.xhtml"
+                                   active="#{pagesBean.isActive(component)}" />
 
-                    <b:navLink value="Persons" icon-awesome="users" href="persons.xhtml"
-                               active="#{navBarBean.isActive(component)}" />
+                        <b:navLink value="Persons" icon-awesome="users" href="persons.xhtml"
+                                   active="#{pagesBean.isActive(component)}" />
 
-                    <!-- Extra buttons definable in template user -->
-                    <ui:insert name="extra-nav-left" />
-                </b:navbarLinks>
+                        <!-- Extra buttons definable in template user -->
+                        <ui:insert name="extra-nav-left" />
+                    </b:navbarLinks>
 
-                <b:navbarLinks pull="right">
-                    <!-- Extra buttons definable in template user -->
-                    <ui:insert name="extra-nav-right" />
+                    <b:navbarLinks pull="right">
+                        <!-- Extra buttons definable in template user -->
+                        <ui:insert name="extra-nav-right" />
 
-                    <!-- Link to the settings page, can be active -->
-                    <b:navLink value="#{msg.settings}" icon-awesome="cog" href="settings.xhtml" 
-                               active="#{navBarBean.isActive(component)}" />
+                        <!-- Link to the settings page, can be active -->
+                        <b:navLink value="#{msg.settings}" icon-awesome="cog" href="settings.xhtml" 
+                                   active="#{pagesBean.isActive(component)}" />
 
-                    <b:dropMenu value="#{localeBean.languageName}" icon-awesome="flag">
-                        <ui:repeat value="#{localeBean.locales}" var="l">
-                            <b:navCommandLink action="#{localeBean.setLocale(l)}" update="navHost contentHost">
-                                #{l.getDisplayName(l)} <span style="color:#aaa">#{l.displayName}</span>
-                            </b:navCommandLink>
-                        </ui:repeat>
-                    </b:dropMenu>
+                        <b:dropMenu value="#{localeBean.languageName}" icon-awesome="flag">
+                            <ui:repeat value="#{localeBean.locales}" var="l">
+                                <b:navCommandLink action="#{localeBean.setLocale(l)}" update="nav content messages">
+                                    #{l.getDisplayName(l)} <span style="color:#aaa">#{l.displayName}</span>
+                                </b:navCommandLink>
+                            </ui:repeat>
+                        </b:dropMenu>
 
-                    <!-- Sign out button, cannot be active, since it is a command button -->
-                    <b:navCommandLink value="#{msg.logout}" icon-awesome="sign-out" action="#{loginBean.logout()}" />
-                </b:navbarLinks>
+                        <!-- Sign out button, cannot be active, since it is a command button -->
+                        <b:navCommandLink value="#{msg.logout}" icon-awesome="sign-out" action="#{loginBean.logout()}" />
+                    </b:navbarLinks>
 
-            </b:navBar>
-        </h:form>
-
-        <b:container id="contentHost">
-            <h:form>
-                <ui:insert name="content" />
+                </b:navBar>
             </h:form>
-        </b:container>
 
-        <b:growl id="growlMessages" globalOnly="true" placementFrom="bottom"
-                 show-detail="true" show-summary="false" allowDismiss="true"
-                 delay="10000" escape="true" /> 
+            <h:form id="content">
+                <b:container >
+                    <ui:insert name="content" />
+                </b:container>
+            </h:form>
+
+            <b:growl id="messages" globalOnly="true" placementFrom="bottom"
+                     show-detail="true" show-summary="false" allowDismiss="true"
+                     delay="10000" escape="true" /> 
+        </f:view>
     </h:body>
 </html>

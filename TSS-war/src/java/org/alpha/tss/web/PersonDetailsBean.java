@@ -7,14 +7,14 @@ package org.alpha.tss.web;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.alpha.tss.logic.TssLogic;
 import org.alpha.tss.logic.dto.Person;
 import org.alpha.tss.logic.dto.Project;
 import org.alpha.tss.logic.dto.ProjectEntry;
 
-@RequestScoped
+@ViewScoped
 @Named
 public class PersonDetailsBean implements Serializable {
 
@@ -22,9 +22,9 @@ public class PersonDetailsBean implements Serializable {
 
     @EJB
     private TssLogic tssLogic;
-    
+
     private long id;
-    
+
     private Person person;
 
     public Person getPerson() {

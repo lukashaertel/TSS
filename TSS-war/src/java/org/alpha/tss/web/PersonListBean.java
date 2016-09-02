@@ -8,11 +8,12 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.alpha.tss.logic.TssLogic;
 import org.alpha.tss.logic.dto.Person;
 
-@RequestScoped
+@ViewScoped
 @Named
 public class PersonListBean implements Serializable {
     private static final long serialVersionUID = -7412985664169675528L;

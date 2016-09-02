@@ -5,6 +5,7 @@
 package org.alpha.tss.entities;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,15 +60,29 @@ public class PersonEntity extends AbstractEntity {
     @OneToMany(mappedBy = "person")
     private Set<RoleEntity> roles;
 
+    private Locale preferredLocale;
+
+    private boolean groupReminders;
+
     public PersonEntity() {
     }
 
-    public PersonEntity(String firstname, String lastname, String email, String title, LocalDate dateOfBirth) {
+    public PersonEntity(String firstname, String lastname, String email, String title, LocalDate dateOfBirth, Locale preferredLocale, boolean groupReminders) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.title = title;
         this.dateOfBirth = dateOfBirth;
+        this.preferredLocale = preferredLocale;
+        this.groupReminders = groupReminders;
+    }
+
+    public boolean isGroupReminders() {
+        return groupReminders;
+    }
+
+    public void setGroupReminders(boolean groupReminders) {
+        this.groupReminders = groupReminders;
     }
 
     public String getFirstname() {
@@ -117,4 +132,13 @@ public class PersonEntity extends AbstractEntity {
     public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
     }
+
+    public Locale getPreferredLocale() {
+        return preferredLocale;
+    }
+
+    public void setPreferredLocale(Locale preferredLocale) {
+        this.preferredLocale = preferredLocale;
+    }
+
 }

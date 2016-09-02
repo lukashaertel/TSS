@@ -10,6 +10,7 @@ import java.util.Currency;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -90,7 +91,8 @@ public class SampleFillBean implements Serializable {
                 "Härtel",
                 "lukashaertel@uni-koblenz.de",
                 null,
-                LocalDate.of(1990, 10, 29));
+                LocalDate.of(1990, 10, 29),
+                new Locale("de"), true);
 
         return "person-details.xhtml?faces-redirect=true&personId=" + person.getId();
     }

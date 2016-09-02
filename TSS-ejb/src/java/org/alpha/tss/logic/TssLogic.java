@@ -6,6 +6,7 @@ package org.alpha.tss.logic;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.Remote;
 import org.alpha.tss.entities.ContractEntity;
 import org.alpha.tss.entities.ContractStatus;
@@ -75,5 +76,5 @@ public interface TssLogic {
     public Person getPersonById(long id);
     public Person getPersonByMail(String mail);
     public List<Person> getPersons();
-    public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth);
+    public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth, Locale preferredLocale, boolean groupReminders);
 }
