@@ -48,9 +48,31 @@
                 </h:dataTable>
             </b:row>
             <h1>${msg.timesheetentries}
-                <b:commandButton value="Add" action="#{sampleFillBean.sampleTimeSheetEntry(timeSheetDetailsBean.id)}" look="primary" iconAwesome="plus"/>
+                <b:button value="Create" look="primary" onclick="$('.modalPseudoClass').modal();return false;" icon-awesome="plus"/>           
             </h1>
             <hr/>
+            <b:modal id="amodal" title="TimeSheetEntry Creation" styleClass="modalPseudoClass">
+                <b:container fluid="true">
+                        <b:row>
+                            <b:inputText span="12" placeholder="Description of work" value=""/>
+                        </b:row>
+                        <b:row>
+                            <b:inputText span="12" placeholder="Comment" value=""/>
+                        </b:row>
+                        <b:row>
+                            <b:inputText span="12" placeholder="Comment" value=""/>
+                        </b:row>                        
+                        <b:row>
+                            <b:inputText span="12" placeholder="Hours" value=""/>
+                        </b:row>
+                        <b:row>
+                            <b:datepicker tooltip="Date" large-screen="full-width" value=""/>
+                        </b:row>
+                    </b:container>
+                <f:facet name="footer">
+                    <b:commandButton value="Create" look="primary" onclick="amodal.dismiss();" action="return false;"/>
+                </f:facet>
+            </b:modal>
             <b:row styleClass="table-responsive">
                 <h:dataTable styleClass="table table-striped" value="#{timeSheetDetailsBean.timeSheetEntries}" var="te" rows="15">
                     <h:column>
