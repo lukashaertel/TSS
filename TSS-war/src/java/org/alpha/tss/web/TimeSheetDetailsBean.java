@@ -41,5 +41,6 @@ public class TimeSheetDetailsBean implements Serializable {
     public void setId(long id) {
         this.id = id;
         this.timeSheet = tssLogic.getTimeSheetById(id);
+        this.timeSheetEntries = tssLogic.getTimeSheetEntriesByTimeSheetId(id);
     }
 }

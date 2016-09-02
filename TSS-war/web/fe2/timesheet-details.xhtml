@@ -47,10 +47,32 @@
                     </h:column>
                 </h:dataTable>
             </b:row>
-            <h1>${msg.timesheetentries}</h1>
+            <h1>${msg.timesheetentries}
+                <b:commandButton value="Add" action="#{sampleFillBean.sampleTimeSheetEntry(timeSheetDetailsBean.id)}" look="primary" iconAwesome="plus"/>
+            </h1>
             <hr/>
             <b:row styleClass="table-responsive">
-                <h:dataTable styleClass="table table-striped" value="#{timeSheetDetailsBean.timeSheetEntries}" var="t" rows="15">
+                <h:dataTable styleClass="table table-striped" value="#{timeSheetDetailsBean.timeSheetEntries}" var="te" rows="15">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{te.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Description of work" /></f:facet>
+                        <h:outputText value="#{te.descriptionOfWork}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Comment" /></f:facet>
+                        <h:outputText value="#{te.comment}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Date" /></f:facet>
+                        <h:outputText converter="localDateTimeConverter" value="#{te.date}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Hours" /></f:facet>
+                        <h:outputText value="#{te.hours}" />
+                    </h:column>
                 </h:dataTable>
             </b:row>
         </ui:define>

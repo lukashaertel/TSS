@@ -29,6 +29,7 @@ import org.alpha.tss.logic.dto.Person;
 import org.alpha.tss.logic.dto.Project;
 import org.alpha.tss.logic.dto.ProjectEntry;
 import org.alpha.tss.logic.dto.TimeSheet;
+import org.alpha.tss.logic.dto.TimeSheetEntry;
 import org.alpha.tss.logic.remind.Reminder;
 import org.alpha.tss.logic.remind.ReminderBean;
 
@@ -98,5 +99,11 @@ public class SampleFillBean implements Serializable {
         Project project = tssLogic.createProject("Testprojekt");
 
         return "project-details.xhtml?faces-redirect=true&projectId=" + project.getId();
+    }
+    
+    public String sampleTimeSheetEntry(long timeSheetId) {
+        TimeSheetEntry tentry = tssLogic.createTimeSheetEntry(timeSheetId, "Test", 
+                "TestComment", LocalDate.now(), 0);
+        return "timesheet-details.xhtml?faces-redirect=true&timeSheetId=" + timeSheetId;
     }
 }

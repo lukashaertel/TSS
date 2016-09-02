@@ -25,6 +25,7 @@ import org.alpha.tss.entities.TimeSheetEntity;
 import org.alpha.tss.entities.TimeSheetFrequency;
 import org.alpha.tss.entities.TimeSheetStatus;
 import org.alpha.tss.entities.ProjectEntity;
+import org.alpha.tss.entities.TimeSheetEntryEntity;
 import org.alpha.tss.logic.TssLogic;
 import org.alpha.tss.logic.dao.ContractAccess;
 import org.alpha.tss.logic.dao.PersonAccess;
@@ -288,10 +289,21 @@ public class TssLogicImpl implements TssLogic {
         return result;
     }
 
+    private TimeSheetEntry createTimeSheetEntryTO(TimeSheetEntryEntity t) {
+        if (t == null) {
+            return null;
+        }
+        return new TimeSheetEntry(t.getId(), t.getDescriptionOfWork(), 
+                t.getComment(), t.getDate(), t.getHours());
+    }
+
     @Override
-    public TimeSheetEntry createTimeSheetEntry(TimeSheetEntity timesheet,
+    public TimeSheetEntry createTimeSheetEntry(long timeSheetId,
             String descriptionOfWork, String comment, LocalDate date, Integer hours) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TimeSheetEntity t =  ta.getTimeSheetById(timeSheetId);
+        TimeSheetEntryEntity te = tea.createTimeSheetEntry(t, descriptionOfWork,
+                comment, date, hours);
+        return createTimeSheetEntryTO(te);
     }
 
     @Override
@@ -302,6 +314,15 @@ public class TssLogicImpl implements TssLogic {
     @Override
     public List<TimeSheetEntry> getTimeSheetEntriesByContractId(long contractId) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public List<TimeSheetEntry> getTimeSheetEntriesByTimeSheetId(long timeSheetId) {
+        List<TimeSheetEntry> result = new ArrayList<>();
+        for (TimeSheetEntryEntity t : tea.getTimeSheetEntriesByTimeSheetId(timeSheetId)) {
+            result.add(createTimeSheetEntryTO(t));
+        }
+        return result;
     }
 
     @Override
@@ -334,6 +355,12 @@ public class TssLogicImpl implements TssLogic {
         return createPersonTO(p);
     }
 
+    @Override
+    public Person getPersonByMail(String mail) {
+        PersonEntity p = pea.getPersonByMail(mail);
+        return createPersonTO(p);
+    }
+    
     @Override
     public List<Person> getPersons() {
         List<Person> result = new ArrayList<>();

@@ -56,10 +56,11 @@ public interface TssLogic {
     /*
      *  TimeSheetEntry
      */
-    public TimeSheetEntry createTimeSheetEntry(TimeSheetEntity timesheet,
+    public TimeSheetEntry createTimeSheetEntry(long timeSheetId,
             String descriptionOfWork, String comment, LocalDate date, Integer hours);
     public TimeSheetEntry getTimeSheetEntryById(long id);
     public List<TimeSheetEntry> getTimeSheetEntriesByContractId(long contractId);
+    public List<TimeSheetEntry> getTimeSheetEntriesByTimeSheetId(long timeSheetId);
     
     /*
      *  Project
@@ -72,6 +73,7 @@ public interface TssLogic {
      * Person
      */
     public Person getPersonById(long id);
+    public Person getPersonByMail(String mail);
     public List<Person> getPersons();
     public Person createPerson(String firstname, String lastname, String email, String title, LocalDate dateOfBirth);
 }

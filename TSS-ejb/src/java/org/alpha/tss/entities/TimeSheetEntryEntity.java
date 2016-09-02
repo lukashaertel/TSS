@@ -5,7 +5,7 @@
 package org.alpha.tss.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +19,11 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "TimeSheetEntryEntity.getAllTimeSheetEntries",
             query = "SELECT t FROM TimeSheetEntryEntity t"
+            + " ORDER BY t.id"),
+    @NamedQuery(
+            name = "TimeSheetEntryEntity.getTimeSheetEntriesByTimeSheetId",
+            query = "SELECT t FROM TimeSheetEntryEntity t"
+            + " WHERE t.timesheet.id = :timeSheetId"
             + " ORDER BY t.id"),
     @NamedQuery(
             name = "TimeSheetEntity.getTimeSheetEntriesFiltered",
@@ -36,13 +41,13 @@ public class TimeSheetEntryEntity extends AbstractEntity {
     
     private String descriptionOfWork;
     private String comment;
-    private Date date;
+    private LocalDate date;
     private Integer hours;
     
     public TimeSheetEntryEntity() {
     }
 
-    public TimeSheetEntryEntity(TimeSheetEntity timesheet, String descriptionOfWork, String comment, Date date, Integer hours) {
+    public TimeSheetEntryEntity(TimeSheetEntity timesheet, String descriptionOfWork, String comment, LocalDate date, Integer hours) {
         this.timesheet = timesheet;
         this.descriptionOfWork = descriptionOfWork;
         this.comment = comment;
@@ -74,11 +79,11 @@ public class TimeSheetEntryEntity extends AbstractEntity {
         this.comment = comment;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

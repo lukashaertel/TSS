@@ -40,6 +40,16 @@ public class PersonAccess {
             return null;
         }
     }
+    
+    public PersonEntity getPersonByMail(String mail) {
+        try {
+            return em.createNamedQuery("PersonEntity.getPersonByMail", PersonEntity.class)
+                    .setParameter("email", mail)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
     public List<PersonEntity> getPersons() {
         List<PersonEntity> l = em.createNamedQuery("PersonEntity.getAllPersons", PersonEntity.class)

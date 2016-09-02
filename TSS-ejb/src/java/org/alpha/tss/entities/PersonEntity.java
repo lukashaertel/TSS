@@ -4,7 +4,6 @@
  */
 package org.alpha.tss.entities;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Column;
@@ -32,6 +31,10 @@ import org.hibernate.validator.constraints.Email;
                     name = "PersonEntity.getPersonById",
                     query = "SELECT p FROM PersonEntity p"
                     + " WHERE p.id = :id"),
+            @NamedQuery(
+                    name = "PersonEntity.getPersonByMail",
+                    query = "SELECT p FROM PersonEntity p"
+                    + " WHERE p.email = :email"),
             @NamedQuery(
                     name = "PersonEntity.getAllPersons",
                     query = "SELECT p FROM PersonEntity p"

@@ -63,6 +63,8 @@ public class ContractDetailsBean implements Serializable {
     }
     
     public void abortContract() {
+        // TO DO: 
+        // Warn user if TimeSheets with status IN PROGRESS have entries
         tssLogic.abortContract(this.id);
         this.refreshContract(this.id);
     }
