@@ -25,8 +25,6 @@ public class Project extends AbstractTransferObject {
 		this.owners = owners;
 	}
 
-	// Abstract TO conversion is not implemented
-	@java.lang.Deprecated
 	public static java.util.Set<Project> wrapProject(java.util.Set<org.alpha.tss.entities.ProjectEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Project> out = new java.util.HashSet<>();
@@ -34,8 +32,6 @@ public class Project extends AbstractTransferObject {
 			out.add(wrapProject(in));
 		return out;
 	}
-	// Abstract TO conversion is not implemented
-	@java.lang.Deprecated
 	public static java.util.List<Project> wrapProject(java.util.List<org.alpha.tss.entities.ProjectEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Project> out = new java.util.ArrayList<>();
@@ -43,8 +39,6 @@ public class Project extends AbstractTransferObject {
 			out.add(wrapProject(in));
 		return out;
 	}
-	// Abstract TO conversion is not implemented
-	@java.lang.Deprecated
 	public static Project wrapProject(org.alpha.tss.entities.ProjectEntity in) {
 		if(in == null) return null;
 		return new Project(in.getId()

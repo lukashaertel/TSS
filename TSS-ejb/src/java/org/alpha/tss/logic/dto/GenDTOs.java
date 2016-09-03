@@ -30,6 +30,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.SortedMap;
+import java.util.TreeSet;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -39,6 +42,7 @@ import org.alpha.tss.entities.ContractEntity_;
 import org.alpha.tss.util.mail.Multimaps;
 
 /**
+ * Generates the DTOs from the entities package
  *
  * @author Lukas Härtel <lukashaertel@uni-koblenz.de>
  */
@@ -64,7 +68,7 @@ public class GenDTOs {
 
             File target = new File("src/java/org/alpha/tss/logic/dto/" + translatedName(c) + ".java");
             try (PrintStream stream = new PrintStream(target)) {
-                generateClass(c, stream);
+                generateClass(c, classes, stream);
             }
         }
     }
@@ -127,7 +131,7 @@ public class GenDTOs {
         throw new IllegalArgumentException();
     }
 
-    private static void generateClass(Class<?> c, PrintStream target) {
+    private static void generateClass(Class<?> c, Set<Class<?>> allClasses, PrintStream target) {
         if (!c.getSimpleName().endsWith("Entity"))
             throw new IllegalArgumentException("Class does not end with the 'Entity' suffix.");
 
@@ -137,9 +141,12 @@ public class GenDTOs {
 
         for (Method m : c.getMethods()) {
             // Skip non-entity hierarchy methods
-            if (AbstractEntity.class.equals(m.getDeclaringClass()))
+            if (AbstractEntity.class
+                    .equals(m.getDeclaringClass()))
                 continue;
-            if (!AbstractEntity.class.isAssignableFrom(m.getDeclaringClass()))
+
+            if (!AbstractEntity.class
+                    .isAssignableFrom(m.getDeclaringClass()))
                 continue;
 
             // Detect getters by name
@@ -154,12 +161,16 @@ public class GenDTOs {
             // Read field for annotations
             try {
                 Field f = m.getDeclaringClass().getDeclaredField(name);
-                
+
                 // Filter non-local properties
-                OneToOne oneToOne = f.getAnnotation(OneToOne.class);
-                OneToMany oneToMany = f.getAnnotation(OneToMany.class);
-                ManyToOne manyToOne = f.getAnnotation(ManyToOne.class);
-                ManyToMany manyToMany = f.getAnnotation(ManyToMany.class);
+                OneToOne oneToOne = f.getAnnotation(OneToOne.class
+                );
+                OneToMany oneToMany = f.getAnnotation(OneToMany.class
+                );
+                ManyToOne manyToOne = f.getAnnotation(ManyToOne.class
+                );
+                ManyToMany manyToMany = f.getAnnotation(ManyToMany.class
+                );
 
                 if (oneToOne != null && !translatedName(c).toLowerCase().equals(oneToOne.mappedBy()))
                     continue;
@@ -191,7 +202,8 @@ public class GenDTOs {
         target.println("@javax.annotation.Generated(value = \"" + GenDTOs.class.getName() + "\", date = \"" + LocalDate.now() + "\")");
 
         // Class header with superclass
-        if (c.getSuperclass().equals(AbstractEntity.class))
+        if (c.getSuperclass().equals(AbstractEntity.class
+        ))
             target.println("public class " + translatedName(c) + " extends AbstractTransferObject {");
         else
             target.println("public class " + translatedName(c) + " extends " + translatedName(c.getSuperclass()) + " {");
@@ -236,9 +248,32 @@ public class GenDTOs {
         ////////////////////////////////////////////////////////////////////////
         // Conversion
         ////////////////////////////////////////////////////////////////////////
+        // Find all subclasses of the given class
+        Set<Class<?>> subclasses = new HashSet<>();
+        for (Class<?> psc : allClasses)
+            if (!c.equals(psc) && c.isAssignableFrom(psc))
+                subclasses.add(psc);
+
+        // Sort by specifictiy
+        List<Class<?>> hierarchical = new ArrayList<>();
+        while (!subclasses.isEmpty()) {
+            hasSub:
+            for (Iterator<Class<?>> it = subclasses.iterator(); it.hasNext();) {
+                Class<?> current = it.next();
+
+                // If there is a class that is assignable to the current class
+                // there is a subclass, do not add to hierarchy yet
+                for (Class<?> s : subclasses)
+                    if (current != s && current.isAssignableFrom(s))
+                        continue hasSub;
+
+                // Remove from set and then add to hierarchical sorting
+                it.remove();
+                hierarchical.add(current);
+            }
+        }
+
         // Set Wrapper
-        target.println("\t// Abstract TO conversion is not implemented");
-        target.println("\t@java.lang.Deprecated");
         target.println("\tpublic static java.util.Set<" + translatedName(c) + "> wrap" + translatedName(c) + "(java.util.Set<" + c.getTypeName() + "> ins) {");
         target.println("\t\tif(ins == null) return null;");
         target.println("\t\tjava.util.Set<" + translatedName(c) + "> out = new java.util.HashSet<>();");
@@ -248,8 +283,6 @@ public class GenDTOs {
         target.println("\t}");
 
         // List Wrapper
-        target.println("\t// Abstract TO conversion is not implemented");
-        target.println("\t@java.lang.Deprecated");
         target.println("\tpublic static java.util.List<" + translatedName(c) + "> wrap" + translatedName(c) + "(java.util.List<" + c.getTypeName() + "> ins) {");
         target.println("\t\tif(ins == null) return null;");
         target.println("\t\tjava.util.List<" + translatedName(c) + "> out = new java.util.ArrayList<>();");
@@ -259,10 +292,12 @@ public class GenDTOs {
         target.println("\t}");
 
         // TO generator
-        target.println("\t// Abstract TO conversion is not implemented");
-        target.println("\t@java.lang.Deprecated");
         target.println("\tpublic static " + translatedName(c) + " wrap" + translatedName(c) + "(" + c.getTypeName() + " in) {");
         target.println("\t\tif(in == null) return null;");
+        for (Class<?> subclass : hierarchical) {
+            target.println("\t\tif(in instanceof " + subclass.getTypeName() + ")");
+            target.println("\t\t\treturn " + translatedName(subclass) + ".wrap" + translatedName(subclass) + "((" + subclass.getTypeName() + ")in);");
+        }
         target.println("\t\treturn new " + translatedName(c) + "(in.getId()");
 
         // Add all getters in same order as they appear in the constructor
@@ -270,7 +305,9 @@ public class GenDTOs {
             if (isEntity(getter.getValue()) || isEntitySet(getter.getValue()) || isEntityList(getter.getValue()))
                 // TO objects have a converter, use it on any incoming entities
                 target.println("\t\t\t, " + translatedName(getEntityClass(getter.getValue())) + ".wrap" + translatedName(getEntityClass(getter.getValue())) + "(in." + rePrefixed("get", getter.getKey()) + "())");
-            else if (Boolean.class.equals(getter.getValue()) || Boolean.TYPE.equals(getter.getValue()))
+
+            else if (Boolean.class
+                    .equals(getter.getValue()) || Boolean.TYPE.equals(getter.getValue()))
                 // Boolean requires getters with 'is'
                 target.println("\t\t\t, in." + rePrefixed("is", getter.getKey()) + "()");
             else
@@ -285,7 +322,8 @@ public class GenDTOs {
         ////////////////////////////////////////////////////////////////////////
         for (Entry<String, Type> getter : getters.entrySet()) {
             // Getter signature based on type
-            if (Boolean.class.equals(getter.getValue()) || Boolean.TYPE.equals(getter.getValue()))
+            if (Boolean.class
+                    .equals(getter.getValue()) || Boolean.TYPE.equals(getter.getValue()))
                 target.println("\tpublic " + printType(getter.getValue()) + " " + rePrefixed("is", getter.getKey()) + "() {");
             else
                 target.println("\tpublic " + printType(getter.getValue()) + " " + rePrefixed("get", getter.getKey()) + "() {");
@@ -321,9 +359,11 @@ public class GenDTOs {
             if (line.endsWith(".class"))
                 try {
                     classes.add(Class.forName(p.getName() + "." + line.substring(0, line.lastIndexOf('.'))));
+
                 } catch (ClassNotFoundException ex) {
                     // Cannot load this class, wont break the rest of the class loading
-                    Logger.getLogger(GenDTOs.class.getName()).log(Level.WARNING, null, ex);
+                    Logger.getLogger(GenDTOs.class
+                            .getName()).log(Level.WARNING, null, ex);
                 }
         }
         return classes;

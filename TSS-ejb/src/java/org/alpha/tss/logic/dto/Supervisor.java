@@ -13,8 +13,6 @@ public class Supervisor extends Role {
 		);
 	}
 
-	// Abstract TO conversion is not implemented
-	@java.lang.Deprecated
 	public static java.util.Set<Supervisor> wrapSupervisor(java.util.Set<org.alpha.tss.entities.SupervisorEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Supervisor> out = new java.util.HashSet<>();
@@ -22,8 +20,6 @@ public class Supervisor extends Role {
 			out.add(wrapSupervisor(in));
 		return out;
 	}
-	// Abstract TO conversion is not implemented
-	@java.lang.Deprecated
 	public static java.util.List<Supervisor> wrapSupervisor(java.util.List<org.alpha.tss.entities.SupervisorEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Supervisor> out = new java.util.ArrayList<>();
@@ -31,8 +27,6 @@ public class Supervisor extends Role {
 			out.add(wrapSupervisor(in));
 		return out;
 	}
-	// Abstract TO conversion is not implemented
-	@java.lang.Deprecated
 	public static Supervisor wrapSupervisor(org.alpha.tss.entities.SupervisorEntity in) {
 		if(in == null) return null;
 		return new Supervisor(in.getId()
