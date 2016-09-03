@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Java EE Web Applications / Summer Term 2016
+ * (C) Lukas Härtel <lukashaertel@uni-koblenz.de>
  */
 package org.alpha.tss.logic.remind;
 
@@ -45,7 +44,7 @@ import org.alpha.tss.util.mail.Multimaps;
 
 /**
  *
- * @author pazuzu
+ * @author Lukas Härtel
  */
 @Stateless
 @LocalBean
@@ -56,9 +55,6 @@ public class ReminderBean {
 
     @EJB
     private ContractAccess ca;
-
-    @EJB
-    private PersonAccess pa;
 
     @Resource(lookup = "mail/uniko-mail")
     private Session mailSession;
@@ -187,6 +183,8 @@ public class ReminderBean {
                 "contract-details.xhtml?contractId={0}",
                 "timesheet-details.xhtml?timeSheetId={0}");
 
+        // TODO Use proper template engine
+        
         for (Reminder reminder : reminders)
             try {
                 StringBuilder builder = new StringBuilder();
@@ -257,6 +255,8 @@ public class ReminderBean {
                 "contract-details.xhtml?contractId={0}",
                 "timesheet-details.xhtml?timeSheetId={0}");
 
+        // TODO Use proper template engine
+        
         // Filter based on participation type
         List<Reminder> asAssistant = new ArrayList<>();
         List<Reminder> asEmployee = new ArrayList<>();
