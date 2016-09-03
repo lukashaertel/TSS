@@ -202,7 +202,7 @@ public class TssLogicImpl implements TssLogic {
     }
 
     @Override
-    //@RolesAllowed("administrator")
+    @RolesAllowed("administrator")
     public void deleteContract(long id) {
         ca.deleteContract(id);
     }

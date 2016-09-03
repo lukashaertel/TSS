@@ -5,6 +5,7 @@
 package org.alpha.tss.web;
 
 import java.io.IOException;
+import java.security.Principal;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -61,7 +62,7 @@ public class LoginBean {
         context.getExternalContext().getRequest();
     try {        
         if (request.getUserPrincipal() == null)
-            request.login(this.username, this.password);        
+            request.login(this.username, this.password);
         context.getExternalContext().redirect("fe2/contracts.xhtml");
     } catch (ServletException e) {
       context.addMessage(null, new FacesMessage(e.getLocalizedMessage()));

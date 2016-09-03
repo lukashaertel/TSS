@@ -63,10 +63,19 @@ public class ContractDetailsBean implements Serializable {
     }
     
     public void abortContract() {
-        // TO DO: 
-        // Warn user if TimeSheets with status IN PROGRESS have entries
-        tssLogic.abortContract(this.id);
-        this.refreshContract(this.id);
+        try {
+            // TO DO: 
+            // Warn user if TimeSheets with status IN PROGRESS have entries
+            if (tssLogic.abortContract(this.id) == false)
+                FacesContext.getCurrentInstance().addMessage(null, 
+                        new FacesMessage("Contract cannot be aborted"));
+            else
+                this.refreshContract(this.id);
+        }
+        catch (EJBAccessException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("Invalid access rights"));
+        }
     }
     
     public void deleteContract() {     
@@ -79,7 +88,7 @@ public class ContractDetailsBean implements Serializable {
             context.addMessage(null, new FacesMessage(e.getLocalizedMessage()));
         }        
         catch(EJBAccessException e) {   
-            context.addMessage(null, new FacesMessage("Access denied"));
+            context.addMessage(null, new FacesMessage("Invalid access rights"));
         }        
     }
     

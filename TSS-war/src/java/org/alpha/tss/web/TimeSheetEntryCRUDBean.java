@@ -43,16 +43,8 @@ public class TimeSheetEntryCRUDBean implements Serializable {
                                                               this.hours);
         return "timesheet-details.xhtml?faces-redirect=true&timeSheetId=" + timeSheetId;
     }
-
-    public TssLogic getTssLogic() {
-        return tssLogic;
-    }
-
-    public void setTssLogic(TssLogic tssLogic) {
-        this.tssLogic = tssLogic;
-    }
     
-   public TimeSheetEntity getTimesheet() {
+    public TimeSheetEntity getTimesheet() {
         return timesheet;
     }
 
@@ -91,8 +83,4 @@ public class TimeSheetEntryCRUDBean implements Serializable {
     public void setHours(Integer hours) {
         this.hours = hours;
     }
-    
-    
-    
-    
  }
