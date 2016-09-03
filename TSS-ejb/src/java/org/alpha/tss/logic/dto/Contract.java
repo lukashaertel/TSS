@@ -1,180 +1,297 @@
-/*
- * Java EE Web Applications / Summer Term 2016
- * (C) Robin Brehmert <rbrehmert@uni-koblenz.de>
- */
 package org.alpha.tss.logic.dto;
 
-import java.time.LocalDate;
-import java.util.Currency;
-import javax.xml.bind.annotation.XmlRootElement;
-import org.alpha.tss.entities.ContractStatus;
-import org.alpha.tss.entities.ContractType;
-import org.alpha.tss.entities.TimeSheetFrequency;
-
-@XmlRootElement
+@javax.xml.bind.annotation.XmlRootElement
+@javax.annotation.Generated(value = "org.alpha.tss.logic.dto.GenDTOs", date = "2016-09-03")
 public class Contract extends AbstractTransferObject {
-    private static final long serialVersionUID = 2302756521389773356L;
-    private ContractType contractType;
-    private ContractStatus contractStatus;
-    private String name;
-    private String description;
-    private String comment;
-    private TimeSheetFrequency frequency;
-    private Integer hoursPerWeek;
-    private Integer totalHoursDue;
-    private Integer vacationHours;
-    private Currency salary;
-    private LocalDate start;
-    private LocalDate end;
-    private LocalDate abort;
-    private Integer workingDaysPerWeek;
-    private Integer vacationDaysPerYear;
-    
-    public Contract() {
-    }
-    
-    public Contract(long id, ContractType contractType,
-            ContractStatus contractStatus, String name, String description,
-            String comment, TimeSheetFrequency frequency, Integer hoursPerWeek,
-            Integer totalHoursDue, Integer vacationHours, Currency salary,
-            LocalDate start, LocalDate end, LocalDate abort, Integer workingDaysPerWeek,
-            Integer vacationDaysPerYear)
-    {
-        super(id);
-        this.contractType = contractType;
-        this.contractStatus = contractStatus;
-        this.name = name;
-        this.description = description;
-        this.comment = comment;
-        this.frequency = frequency;
-        this.hoursPerWeek = hoursPerWeek;
-        this.totalHoursDue = totalHoursDue;
-        this.vacationHours = vacationHours;
-        this.salary = salary;
-        this.start = start;
-        this.end = end;
-        this.abort = abort;
-        this.workingDaysPerWeek = workingDaysPerWeek;
-        this.vacationDaysPerYear = vacationDaysPerYear;
-    }
+	private static final long serialVersionUID = 1L;
 
-    public ContractType getContractType() {
-        return contractType;
-    }
+	private java.util.Set<Assistant> assistants;
 
-    public void setContractType(ContractType contractType) {
-        this.contractType = contractType;
-    }
+	private java.lang.Integer hoursPerWeek;
 
-    public ContractStatus getContractStatus() {
-        return contractStatus;
-    }
+	private java.lang.Integer workingDaysPerWeek;
 
-    public void setContractStatus(ContractStatus contractStatus) {
-        this.contractStatus = contractStatus;
-    }
+	private java.time.LocalDate start;
 
-    public String getName() {
-        return name;
-    }
+	private java.lang.String description;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private java.util.Currency salary;
 
-    public String getDescription() {
-        return description;
-    }
+	private Employee employee;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	private org.alpha.tss.entities.ContractType type;
 
-    public String getComment() {
-        return comment;
-    }
+	private java.lang.Integer totalHoursDue;
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	private org.alpha.tss.entities.TimeSheetFrequency frequency;
 
-    public TimeSheetFrequency getFrequency() {
-        return frequency;
-    }
+	private java.util.Set<Secretary> secretaries;
 
-    public void setFrequency(TimeSheetFrequency frequency) {
-        this.frequency = frequency;
-    }
+	private java.time.LocalDate abort;
 
-    public Integer getHoursPerWeek() {
-        return hoursPerWeek;
-    }
+	private java.lang.Integer vacationHours;
 
-    public void setHoursPerWeek(Integer hoursPerWeek) {
-        this.hoursPerWeek = hoursPerWeek;
-    }
+	private java.util.Set<TimeSheet> timeSheets;
 
-    public Integer getTotalHoursDue() {
-        return totalHoursDue;
-    }
+	private java.lang.String name;
 
-    public void setTotalHoursDue(Integer totalHoursDue) {
-        this.totalHoursDue = totalHoursDue;
-    }
+	private java.lang.String comment;
 
-    public Integer getVacationHours() {
-        return vacationHours;
-    }
+	private java.time.LocalDate end;
 
-    public void setVacationHours(Integer vacationHours) {
-        this.vacationHours = vacationHours;
-    }
+	private java.lang.Integer vacationDaysPerYear;
 
-    public Currency getSalary() {
-        return salary;
-    }
+	private Supervisor supervisor;
 
-    public void setSalary(Currency salary) {
-        this.salary = salary;
-    }
+	private org.alpha.tss.entities.ContractStatus status;
 
-    public LocalDate getStart() {
-        return start;
-    }
+	public Contract() { }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
+	public Contract(long id
+		, java.util.Set<Assistant> assistants
+		, java.lang.Integer hoursPerWeek
+		, java.lang.Integer workingDaysPerWeek
+		, java.time.LocalDate start
+		, java.lang.String description
+		, java.util.Currency salary
+		, Employee employee
+		, org.alpha.tss.entities.ContractType type
+		, java.lang.Integer totalHoursDue
+		, org.alpha.tss.entities.TimeSheetFrequency frequency
+		, java.util.Set<Secretary> secretaries
+		, java.time.LocalDate abort
+		, java.lang.Integer vacationHours
+		, java.util.Set<TimeSheet> timeSheets
+		, java.lang.String name
+		, java.lang.String comment
+		, java.time.LocalDate end
+		, java.lang.Integer vacationDaysPerYear
+		, Supervisor supervisor
+		, org.alpha.tss.entities.ContractStatus status
+	) {
+		super(id
+		);
+		this.assistants = assistants;
+		this.hoursPerWeek = hoursPerWeek;
+		this.workingDaysPerWeek = workingDaysPerWeek;
+		this.start = start;
+		this.description = description;
+		this.salary = salary;
+		this.employee = employee;
+		this.type = type;
+		this.totalHoursDue = totalHoursDue;
+		this.frequency = frequency;
+		this.secretaries = secretaries;
+		this.abort = abort;
+		this.vacationHours = vacationHours;
+		this.timeSheets = timeSheets;
+		this.name = name;
+		this.comment = comment;
+		this.end = end;
+		this.vacationDaysPerYear = vacationDaysPerYear;
+		this.supervisor = supervisor;
+		this.status = status;
+	}
 
-    public LocalDate getEnd() {
-        return end;
-    }
+	public static java.util.Set<Contract> wrapContract(java.util.Set<org.alpha.tss.entities.ContractEntity> ins) {
+		if(ins == null) return null;
+		java.util.Set<Contract> out = new java.util.HashSet<>();
+		for(org.alpha.tss.entities.ContractEntity in : ins)
+			out.add(wrapContract(in));
+		return out;
+	}
+	public static java.util.List<Contract> wrapContract(java.util.List<org.alpha.tss.entities.ContractEntity> ins) {
+		if(ins == null) return null;
+		java.util.List<Contract> out = new java.util.ArrayList<>();
+		for(org.alpha.tss.entities.ContractEntity in : ins)
+			out.add(wrapContract(in));
+		return out;
+	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
+	public static Contract wrapContract(org.alpha.tss.entities.ContractEntity in) {
+		if(in == null) return null;
+		return new Contract(in.getId()
+			, Assistant.wrapAssistant(in.getAssistants())
+			, in.getHoursPerWeek()
+			, in.getWorkingDaysPerWeek()
+			, in.getStart()
+			, in.getDescription()
+			, in.getSalary()
+			, Employee.wrapEmployee(in.getEmployee())
+			, in.getType()
+			, in.getTotalHoursDue()
+			, in.getFrequency()
+			, Secretary.wrapSecretary(in.getSecretaries())
+			, in.getAbort()
+			, in.getVacationHours()
+			, TimeSheet.wrapTimeSheet(in.getTimeSheets())
+			, in.getName()
+			, in.getComment()
+			, in.getEnd()
+			, in.getVacationDaysPerYear()
+			, Supervisor.wrapSupervisor(in.getSupervisor())
+			, in.getStatus()
+		);
+	}
+	public java.util.Set<Assistant> getAssistants() {
+		return assistants;
+	}
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
+	public void setAssistants(java.util.Set<Assistant> assistants) {
+		this.assistants = assistants;
+	}
 
-    public LocalDate getAbort() {
-        return abort;
-    }
+	public java.lang.Integer getHoursPerWeek() {
+		return hoursPerWeek;
+	}
 
-    public void setAbort(LocalDate abort) {
-        this.abort = abort;
-    }
+	public void setHoursPerWeek(java.lang.Integer hoursPerWeek) {
+		this.hoursPerWeek = hoursPerWeek;
+	}
 
-    public Integer getWorkingDaysPerWeek() {
-        return workingDaysPerWeek;
-    }
+	public java.lang.Integer getWorkingDaysPerWeek() {
+		return workingDaysPerWeek;
+	}
 
-    public void setWorkingDaysPerWeek(Integer workingDaysPerWeek) {
-        this.workingDaysPerWeek = workingDaysPerWeek;
-    }
+	public void setWorkingDaysPerWeek(java.lang.Integer workingDaysPerWeek) {
+		this.workingDaysPerWeek = workingDaysPerWeek;
+	}
 
-    public Integer getVacationDaysPerYear() {
-        return vacationDaysPerYear;
-    }
+	public java.time.LocalDate getStart() {
+		return start;
+	}
 
-    public void setVacationDaysPerYear(Integer vacationDaysPerYear) {
-        this.vacationDaysPerYear = vacationDaysPerYear;
-    }
+	public void setStart(java.time.LocalDate start) {
+		this.start = start;
+	}
+
+	public java.lang.String getDescription() {
+		return description;
+	}
+
+	public void setDescription(java.lang.String description) {
+		this.description = description;
+	}
+
+	public java.util.Currency getSalary() {
+		return salary;
+	}
+
+	public void setSalary(java.util.Currency salary) {
+		this.salary = salary;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public org.alpha.tss.entities.ContractType getType() {
+		return type;
+	}
+
+	public void setType(org.alpha.tss.entities.ContractType type) {
+		this.type = type;
+	}
+
+	public java.lang.Integer getTotalHoursDue() {
+		return totalHoursDue;
+	}
+
+	public void setTotalHoursDue(java.lang.Integer totalHoursDue) {
+		this.totalHoursDue = totalHoursDue;
+	}
+
+	public org.alpha.tss.entities.TimeSheetFrequency getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(org.alpha.tss.entities.TimeSheetFrequency frequency) {
+		this.frequency = frequency;
+	}
+
+	public java.util.Set<Secretary> getSecretaries() {
+		return secretaries;
+	}
+
+	public void setSecretaries(java.util.Set<Secretary> secretaries) {
+		this.secretaries = secretaries;
+	}
+
+	public java.time.LocalDate getAbort() {
+		return abort;
+	}
+
+	public void setAbort(java.time.LocalDate abort) {
+		this.abort = abort;
+	}
+
+	public java.lang.Integer getVacationHours() {
+		return vacationHours;
+	}
+
+	public void setVacationHours(java.lang.Integer vacationHours) {
+		this.vacationHours = vacationHours;
+	}
+
+	public java.util.Set<TimeSheet> getTimeSheets() {
+		return timeSheets;
+	}
+
+	public void setTimeSheets(java.util.Set<TimeSheet> timeSheets) {
+		this.timeSheets = timeSheets;
+	}
+
+	public java.lang.String getName() {
+		return name;
+	}
+
+	public void setName(java.lang.String name) {
+		this.name = name;
+	}
+
+	public java.lang.String getComment() {
+		return comment;
+	}
+
+	public void setComment(java.lang.String comment) {
+		this.comment = comment;
+	}
+
+	public java.time.LocalDate getEnd() {
+		return end;
+	}
+
+	public void setEnd(java.time.LocalDate end) {
+		this.end = end;
+	}
+
+	public java.lang.Integer getVacationDaysPerYear() {
+		return vacationDaysPerYear;
+	}
+
+	public void setVacationDaysPerYear(java.lang.Integer vacationDaysPerYear) {
+		this.vacationDaysPerYear = vacationDaysPerYear;
+	}
+
+	public Supervisor getSupervisor() {
+		return supervisor;
+	}
+
+	public void setSupervisor(Supervisor supervisor) {
+		this.supervisor = supervisor;
+	}
+
+	public org.alpha.tss.entities.ContractStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(org.alpha.tss.entities.ContractStatus status) {
+		this.status = status;
+	}
+
 }

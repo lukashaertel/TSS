@@ -1,102 +1,141 @@
-/*
- * Java EE Web Applications / Summer Term 2016
- * (C) Robin Brehmert <rbrehmert@uni-koblenz.de>
- */
 package org.alpha.tss.logic.dto;
 
-import java.time.LocalDate;
-import java.util.Locale;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
+@javax.xml.bind.annotation.XmlRootElement
+@javax.annotation.Generated(value = "org.alpha.tss.logic.dto.GenDTOs", date = "2016-09-03")
 public class Person extends AbstractTransferObject {
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+	private java.lang.String firstname;
 
-    private String firstname;
+	private boolean groupReminders;
 
-    private String lastname;
+	private java.util.Set<Role> roles;
 
-    private String email;
+	private java.time.LocalDate dateOfBirth;
 
-    private String title;
+	private java.lang.String title;
 
-    private LocalDate dateOfBirth;
-    
-    private Locale preferredLocale;
-    
-    private boolean groupReminders;
+	private java.lang.String email;
 
-    public Person() {
-    }
+	private java.lang.String lastname;
 
-    public Person(long id, String firstname, String lastname, String email, String title, LocalDate dateOfBirth, Locale preferredLocale,boolean groupReminders) {
-        super(id);
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.title = title;
-        this.dateOfBirth = dateOfBirth;
-        this.preferredLocale = preferredLocale;
-        this.groupReminders =groupReminders;
-    }
+	private java.util.Locale preferredLocale;
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public Person() { }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public Person(long id
+		, java.lang.String firstname
+		, boolean groupReminders
+		, java.util.Set<Role> roles
+		, java.time.LocalDate dateOfBirth
+		, java.lang.String title
+		, java.lang.String email
+		, java.lang.String lastname
+		, java.util.Locale preferredLocale
+	) {
+		super(id
+		);
+		this.firstname = firstname;
+		this.groupReminders = groupReminders;
+		this.roles = roles;
+		this.dateOfBirth = dateOfBirth;
+		this.title = title;
+		this.email = email;
+		this.lastname = lastname;
+		this.preferredLocale = preferredLocale;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public static java.util.Set<Person> wrapPerson(java.util.Set<org.alpha.tss.entities.PersonEntity> ins) {
+		if(ins == null) return null;
+		java.util.Set<Person> out = new java.util.HashSet<>();
+		for(org.alpha.tss.entities.PersonEntity in : ins)
+			out.add(wrapPerson(in));
+		return out;
+	}
+	public static java.util.List<Person> wrapPerson(java.util.List<org.alpha.tss.entities.PersonEntity> ins) {
+		if(ins == null) return null;
+		java.util.List<Person> out = new java.util.ArrayList<>();
+		for(org.alpha.tss.entities.PersonEntity in : ins)
+			out.add(wrapPerson(in));
+		return out;
+	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
+	public static Person wrapPerson(org.alpha.tss.entities.PersonEntity in) {
+		if(in == null) return null;
+		return new Person(in.getId()
+			, in.getFirstname()
+			, in.isGroupReminders()
+			, Role.wrapRole(in.getRoles())
+			, in.getDateOfBirth()
+			, in.getTitle()
+			, in.getEmail()
+			, in.getLastname()
+			, in.getPreferredLocale()
+		);
+	}
+	public java.lang.String getFirstname() {
+		return firstname;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public void setFirstname(java.lang.String firstname) {
+		this.firstname = firstname;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public boolean isGroupReminders() {
+		return groupReminders;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setGroupReminders(boolean groupReminders) {
+		this.groupReminders = groupReminders;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public java.util.Set<Role> getRoles() {
+		return roles;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setRoles(java.util.Set<Role> roles) {
+		this.roles = roles;
+	}
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
+	public java.time.LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+	public void setDateOfBirth(java.time.LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public Locale getPreferredLocale() {
-        return preferredLocale;
-    }
+	public java.lang.String getTitle() {
+		return title;
+	}
 
-    public void setPreferredLocale(Locale preferredLocale) {
-        this.preferredLocale = preferredLocale;
-    }
+	public void setTitle(java.lang.String title) {
+		this.title = title;
+	}
 
-    public boolean isGroupReminders() {
-        return groupReminders;
-    }
+	public java.lang.String getEmail() {
+		return email;
+	}
 
-    public void setGroupReminders(boolean groupReminders) {
-        this.groupReminders = groupReminders;
-    }
-    
-    
-    
+	public void setEmail(java.lang.String email) {
+		this.email = email;
+	}
+
+	public java.lang.String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(java.lang.String lastname) {
+		this.lastname = lastname;
+	}
+
+	public java.util.Locale getPreferredLocale() {
+		return preferredLocale;
+	}
+
+	public void setPreferredLocale(java.util.Locale preferredLocale) {
+		this.preferredLocale = preferredLocale;
+	}
+
 }

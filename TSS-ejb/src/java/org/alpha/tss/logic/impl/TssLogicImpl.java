@@ -73,14 +73,7 @@ public class TssLogicImpl implements TssLogic {
 
     //@RolesAllowed("ACCTMGR")
     private Contract createContractTO(ContractEntity c) {
-        if (c == null) {
-            return null;
-        }
-        return new Contract(c.getId(), c.getType(), c.getStatus(), c.getName(),
-                c.getDescription(), c.getComment(), c.getFrequency(),
-                c.getHoursPerWeek(), c.getTotalHoursDue(), c.getVacationHours(),
-                c.getSalary(), c.getStart(), c.getEnd(), c.getAbort(),
-                c.getWorkingDaysPerWeek(), c.getVacationDaysPerYear());
+        return c == null ? null : Contract.wrapContract(c);
     }
 
     @Override
@@ -192,7 +185,7 @@ public class TssLogicImpl implements TssLogic {
     //@RolesAllowed("supervisor")
     public Contract updateContract(Contract c) {
         // Update only allowed when contract status equals PREPARED
-        if (c.getContractStatus() != ContractStatus.PREPARED)
+        if (c.getStatus() != ContractStatus.PREPARED)
             return c;
 
         return createContractTO(ca.updateContract(c.getId(), c.getStart(),
@@ -213,17 +206,12 @@ public class TssLogicImpl implements TssLogic {
             TimeSheetStatus status, LocalDate start, LocalDate end, Integer hoursDue) {
         TimeSheetEntity t = ta.createTimeSheet(contract, status, start, end,
                 hoursDue);
-        return new TimeSheet(t.getId(), t.getStatus(), t.getStart(), t.getEnd(),
-                t.getHoursDue());
+        return createTimeSheetTO(t);
     }
 
     //@RolesAllowed("ACCTMGR")
     private TimeSheet createTimeSheetTO(TimeSheetEntity t) {
-        if (t == null) {
-            return null;
-        }
-        return new TimeSheet(t.getId(), t.getStatus(), t.getStart(), t.getEnd(),
-                t.getHoursDue());
+        return t == null ? null : TimeSheet.wrapTimeSheet(t);
     }
 
     @Override
@@ -268,11 +256,7 @@ public class TssLogicImpl implements TssLogic {
 
     //@RolesAllowed("ACCTMGR")
     private Project createProjectTO(ProjectEntity p) {
-        if (p == null) {
-            return null;
-        }
-        return new Project(p.getId(), p.getName(), p.getContracts(),
-                p.getEntries(), p.getOwners());
+        return p == null ? null : Project.wrapProject(p);
     }
 
     @Override
@@ -291,11 +275,7 @@ public class TssLogicImpl implements TssLogic {
     }
 
     private TimeSheetEntry createTimeSheetEntryTO(TimeSheetEntryEntity t) {
-        if (t == null) {
-            return null;
-        }
-        return new TimeSheetEntry(t.getId(), t.getDescriptionOfWork(),
-                t.getComment(), t.getDate(), t.getHours());
+        return t == null ? null : TimeSheetEntry.wrapTimeSheetEntry(t);
     }
 
     @Override
@@ -344,10 +324,7 @@ public class TssLogicImpl implements TssLogic {
 
     //@RolesAllowed("ACCTMGR")
     private Person createPersonTO(PersonEntity p) {
-        if (p == null) {
-            return null;
-        }
-        return new Person(p.getId(), p.getFirstname(), p.getLastname(), p.getEmail(), p.getTitle(), p.getDateOfBirth(), p.getPreferredLocale(), p.isGroupReminders());
+        return p == null ? null : Person.wrapPerson(p);
     }
 
     @Override
