@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Java EE Web Applications / Summer Term 2016
+ * (C) Lukas Härtel <lukashaertel@uni-koblenz.de>
  */
 package org.alpha.tss.logic.remind;
 
@@ -10,8 +9,9 @@ import org.alpha.tss.logic.dto.Contract;
 import org.alpha.tss.logic.dto.TimeSheet;
 
 /**
+ * Encapsules a reminder associated to a person externally.
  *
- * @author pazuzu
+ * @author Lukas Härtel
  */
 public final class Reminder {
 

@@ -1,61 +1,87 @@
-/*
- * Java EE Web Applications / Summer Term 2016
- * (C) Robin Brehmert <rbrehmert@uni-koblenz.de>
- */
 package org.alpha.tss.logic.dto;
 
-import java.time.LocalDate;
-import javax.xml.bind.annotation.XmlRootElement;
+@javax.xml.bind.annotation.XmlRootElement
+@javax.annotation.Generated(value = "org.alpha.tss.logic.dto.GenDTOs", date = "2016-09-03")
+public class TimeSheetEntry extends AbstractTransferObject {
+	private static final long serialVersionUID = 1L;
 
-@XmlRootElement
-public class TimeSheetEntry extends AbstractTransferObject {    
-    private static final long serialVersionUID = -3006745004450084005L;
-    
-    private String descriptionOfWork;
-    private String comment;
-    private LocalDate date;
-    private Integer hours;
-    
-    public TimeSheetEntry() {
-    }    
+	private java.time.LocalDate date;
 
-    public TimeSheetEntry( long id, String descriptionOfWork, String comment, LocalDate date, Integer hours) {
-        super(id);
-        this.descriptionOfWork = descriptionOfWork;
-        this.comment = comment;
-        this.date = date;
-        this.hours = hours;
-    }
+	private java.lang.Integer hours;
 
-    public String getDescriptionOfWork() {
-        return descriptionOfWork;
-    }
+	private java.lang.String comment;
 
-    public void setDescriptionOfWork(String descriptionOfWork) {
-        this.descriptionOfWork = descriptionOfWork;
-    }
+	private java.lang.String descriptionOfWork;
 
-    public String getComment() {
-        return comment;
-    }
+	public TimeSheetEntry() { }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	public TimeSheetEntry(long id
+		, java.time.LocalDate date
+		, java.lang.Integer hours
+		, java.lang.String comment
+		, java.lang.String descriptionOfWork
+	) {
+		super(id
+		);
+		this.date = date;
+		this.hours = hours;
+		this.comment = comment;
+		this.descriptionOfWork = descriptionOfWork;
+	}
 
-    public LocalDate getDate() {
-        return date;
-    }
+	public static java.util.Set<TimeSheetEntry> wrapTimeSheetEntry(java.util.Set<org.alpha.tss.entities.TimeSheetEntryEntity> ins) {
+		if(ins == null) return null;
+		java.util.Set<TimeSheetEntry> out = new java.util.HashSet<>();
+		for(org.alpha.tss.entities.TimeSheetEntryEntity in : ins)
+			out.add(wrapTimeSheetEntry(in));
+		return out;
+	}
+	public static java.util.List<TimeSheetEntry> wrapTimeSheetEntry(java.util.List<org.alpha.tss.entities.TimeSheetEntryEntity> ins) {
+		if(ins == null) return null;
+		java.util.List<TimeSheetEntry> out = new java.util.ArrayList<>();
+		for(org.alpha.tss.entities.TimeSheetEntryEntity in : ins)
+			out.add(wrapTimeSheetEntry(in));
+		return out;
+	}
+	public static TimeSheetEntry wrapTimeSheetEntry(org.alpha.tss.entities.TimeSheetEntryEntity in) {
+		if(in == null) return null;
+		return new TimeSheetEntry(in.getId()
+			, in.getDate()
+			, in.getHours()
+			, in.getComment()
+			, in.getDescriptionOfWork()
+		);
+	}
+	public java.time.LocalDate getDate() {
+		return date;
+	}
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+	public void setDate(java.time.LocalDate date) {
+		this.date = date;
+	}
 
-    public Integer getHours() {
-        return hours;
-    }
+	public java.lang.Integer getHours() {
+		return hours;
+	}
 
-    public void setHours(Integer hours) {
-        this.hours = hours;
-    }
+	public void setHours(java.lang.Integer hours) {
+		this.hours = hours;
+	}
+
+	public java.lang.String getComment() {
+		return comment;
+	}
+
+	public void setComment(java.lang.String comment) {
+		this.comment = comment;
+	}
+
+	public java.lang.String getDescriptionOfWork() {
+		return descriptionOfWork;
+	}
+
+	public void setDescriptionOfWork(java.lang.String descriptionOfWork) {
+		this.descriptionOfWork = descriptionOfWork;
+	}
+
 }

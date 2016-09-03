@@ -1,66 +1,74 @@
-/*
- * Java EE Web Applications / Summer Term 2016
- * (C) Robin Brehmert <rbrehmert@uni-koblenz.de>
- */
 package org.alpha.tss.logic.dto;
 
-import java.util.Set;
-import javax.xml.bind.annotation.XmlRootElement;
-import org.alpha.tss.entities.ContractEntity;
-import org.alpha.tss.entities.ProjectEntryEntity;
-import org.alpha.tss.entities.AssistantEntity;
+@javax.xml.bind.annotation.XmlRootElement
+@javax.annotation.Generated(value = "org.alpha.tss.logic.dto.GenDTOs", date = "2016-09-03")
+public class Project extends AbstractTransferObject {
+	private static final long serialVersionUID = 1L;
 
-@XmlRootElement
-public class Project extends AbstractTransferObject { 
+	private java.util.Set<ProjectEntry> entries;
 
-    private static final long serialVersionUID = -8224232069134457589L;
+	private java.lang.String name;
 
-    private String name;
-    private Set<ContractEntity> contracts;
-    private Set<ProjectEntryEntity> entries;
-    private Set<AssistantEntity> owners;
+	private java.util.Set<Assistant> owners;
 
-    public Project() {
-    }
+	public Project() { }
 
-    public Project(long id, String name, Set<ContractEntity> contracts, 
-            Set<ProjectEntryEntity> entries, Set<AssistantEntity> owners) {
-        super(id);
-        this.name = name;
-        this.contracts = contracts;
-        this.entries = entries;
-        this.owners = owners;
-    }
+	public Project(long id
+		, java.util.Set<ProjectEntry> entries
+		, java.lang.String name
+		, java.util.Set<Assistant> owners
+	) {
+		super(id
+		);
+		this.entries = entries;
+		this.name = name;
+		this.owners = owners;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public static java.util.Set<Project> wrapProject(java.util.Set<org.alpha.tss.entities.ProjectEntity> ins) {
+		if(ins == null) return null;
+		java.util.Set<Project> out = new java.util.HashSet<>();
+		for(org.alpha.tss.entities.ProjectEntity in : ins)
+			out.add(wrapProject(in));
+		return out;
+	}
+	public static java.util.List<Project> wrapProject(java.util.List<org.alpha.tss.entities.ProjectEntity> ins) {
+		if(ins == null) return null;
+		java.util.List<Project> out = new java.util.ArrayList<>();
+		for(org.alpha.tss.entities.ProjectEntity in : ins)
+			out.add(wrapProject(in));
+		return out;
+	}
+	public static Project wrapProject(org.alpha.tss.entities.ProjectEntity in) {
+		if(in == null) return null;
+		return new Project(in.getId()
+			, ProjectEntry.wrapProjectEntry(in.getEntries())
+			, in.getName()
+			, Assistant.wrapAssistant(in.getOwners())
+		);
+	}
+	public java.util.Set<ProjectEntry> getEntries() {
+		return entries;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setEntries(java.util.Set<ProjectEntry> entries) {
+		this.entries = entries;
+	}
 
-    public Set<ContractEntity> getContracts() {
-        return contracts;
-    }
+	public java.lang.String getName() {
+		return name;
+	}
 
-    public void setContracts(Set<ContractEntity> contracts) {
-        this.contracts = contracts;
-    }
+	public void setName(java.lang.String name) {
+		this.name = name;
+	}
 
-    public Set<ProjectEntryEntity> getEntries() {
-        return entries;
-    }
+	public java.util.Set<Assistant> getOwners() {
+		return owners;
+	}
 
-    public void setEntries(Set<ProjectEntryEntity> entries) {
-        this.entries = entries;
-    }
+	public void setOwners(java.util.Set<Assistant> owners) {
+		this.owners = owners;
+	}
 
-    public Set<AssistantEntity> getOwners() {
-        return owners;
-    }
-
-    public void setOwners(Set<AssistantEntity> owners) {
-        this.owners = owners;
-    }
 }

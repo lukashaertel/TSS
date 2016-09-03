@@ -16,6 +16,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/circle.css" />
 
         <style type="text/css">
+            #printcontent, #printcontent * {
+                visibility: hidden;
+                height: 0px;
+                width: 0px;
+            }
+
             .sub-header {
                 border-bottom: 1px solid #eee;
                 padding-bottom: 10px;
@@ -85,10 +91,45 @@ and open the template in the editor.
                 display: inline-block;
             }
         </style>
+
+        <style type="text/css" media="print">
+            @page {
+                size: A4;
+
+                margin-top: 1.5cm;
+                margin-bottom: 1.5cm;
+
+                margin-left: 2.5cm;
+                margin-right: 2.5cm;
+            }
+            @media print {
+                html, body {
+                    width: 768px;
+                }
+                /*
+                 * Visibility instead of display is used, as the layout engine
+                 * is using some of the surrounding elements to determin the
+                 * style. Size needs to be cleared, as collapse does not work
+                 * with the elements in question.
+                 * TODO: If there's a better solution, please apply 
+                 */
+                #nav, #nav *, #content, #content *, #messages, #messages * {
+                    visibility: hidden;
+                    height: 0px;
+                    width: 0px;
+                } 
+                #printcontent, #printcontent * {
+                    visibility: visible;
+                    height: inherit;
+                    width: inherit;
+                }
+            }
+        </style>
     </h:head>
 
     <h:body>
         <f:view locale="#{localeBean.locale}">
+            <!-- Navigation bar containing branding and user options -->
             <h:form id="nav">
                 <b:navBar brand="TSS" brandHref="">
                     <b:navbarLinks>
@@ -110,13 +151,16 @@ and open the template in the editor.
                         <!-- Extra buttons definable in template user -->
                         <ui:insert name="extra-nav-right" />
 
+                        <!-- Used to print pages that define printable to be true -->
+                        <b:navCommandLink value="Print" icon-awesome="print" onclick="window.print()" outcome="#" rendered="#{false or printable}"/>
+
                         <!-- Link to the settings page, can be active -->
                         <b:navLink value="#{msg.settings}" icon-awesome="cog" href="settings.xhtml" 
                                    active="#{pagesBean.isActive(component)}" />
 
                         <b:dropMenu value="#{localeBean.languageName}" icon-awesome="flag">
                             <ui:repeat value="#{localeBean.locales}" var="l">
-                                <b:navCommandLink action="#{localeBean.setLocale(l)}" update="nav content messages">
+                                <b:navCommandLink action="#{localeBean.setLocale(l)}" update="nav content printcontent messages">
                                     #{l.getDisplayName(l)} <span style="color:#aaa">#{l.displayName}</span>
                                 </b:navCommandLink>
                             </ui:repeat>
@@ -129,12 +173,19 @@ and open the template in the editor.
                 </b:navBar>
             </h:form>
 
+            <!-- Content box, can be UI defined -->
             <h:form id="content">
                 <b:container >
                     <ui:insert name="content" />
                 </b:container>
             </h:form>
 
+            <!-- Content box printable box, can be UI defined, remember to set the printable parameter to true -->
+            <b:container id="printcontent">
+                <ui:insert name="printcontent" />
+            </b:container>
+
+            <!-- Message element for notifications -->
             <b:growl id="messages" globalOnly="true" placementFrom="bottom"
                      show-detail="true" show-summary="false" allowDismiss="true"
                      delay="10000" escape="true" /> 

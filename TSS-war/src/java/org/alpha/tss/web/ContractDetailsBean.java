@@ -46,7 +46,7 @@ public class ContractDetailsBean implements Serializable {
     }    
     
     public boolean isEditContractAllowed() {
-        return this.contract.getContractStatus() == ContractStatus.PREPARED;
+        return this.contract.getStatus() == ContractStatus.PREPARED;
     }
     
     public boolean isAbortContractAllowed() {
