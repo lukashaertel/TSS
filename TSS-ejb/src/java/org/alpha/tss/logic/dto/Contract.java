@@ -15,11 +15,11 @@ public class Contract extends AbstractTransferObject {
 
 	private java.lang.String description;
 
+	private org.alpha.tss.entities.ContractType type;
+
 	private java.util.Currency salary;
 
 	private Employee employee;
-
-	private org.alpha.tss.entities.ContractType type;
 
 	private java.lang.Integer totalHoursDue;
 
@@ -29,11 +29,11 @@ public class Contract extends AbstractTransferObject {
 
 	private java.time.LocalDate abort;
 
+	private java.lang.String name;
+
 	private java.lang.Integer vacationHours;
 
 	private java.util.Set<TimeSheet> timeSheets;
-
-	private java.lang.String name;
 
 	private java.lang.String comment;
 
@@ -53,16 +53,16 @@ public class Contract extends AbstractTransferObject {
 		, java.lang.Integer workingDaysPerWeek
 		, java.time.LocalDate start
 		, java.lang.String description
+		, org.alpha.tss.entities.ContractType type
 		, java.util.Currency salary
 		, Employee employee
-		, org.alpha.tss.entities.ContractType type
 		, java.lang.Integer totalHoursDue
 		, org.alpha.tss.entities.TimeSheetFrequency frequency
 		, java.util.Set<Secretary> secretaries
 		, java.time.LocalDate abort
+		, java.lang.String name
 		, java.lang.Integer vacationHours
 		, java.util.Set<TimeSheet> timeSheets
-		, java.lang.String name
 		, java.lang.String comment
 		, java.time.LocalDate end
 		, java.lang.Integer vacationDaysPerYear
@@ -76,16 +76,16 @@ public class Contract extends AbstractTransferObject {
 		this.workingDaysPerWeek = workingDaysPerWeek;
 		this.start = start;
 		this.description = description;
+		this.type = type;
 		this.salary = salary;
 		this.employee = employee;
-		this.type = type;
 		this.totalHoursDue = totalHoursDue;
 		this.frequency = frequency;
 		this.secretaries = secretaries;
 		this.abort = abort;
+		this.name = name;
 		this.vacationHours = vacationHours;
 		this.timeSheets = timeSheets;
-		this.name = name;
 		this.comment = comment;
 		this.end = end;
 		this.vacationDaysPerYear = vacationDaysPerYear;
@@ -115,16 +115,16 @@ public class Contract extends AbstractTransferObject {
 			, in.getWorkingDaysPerWeek()
 			, in.getStart()
 			, in.getDescription()
+			, in.getType()
 			, in.getSalary()
 			, Employee.wrapEmployee(in.getEmployee())
-			, in.getType()
 			, in.getTotalHoursDue()
 			, in.getFrequency()
 			, Secretary.wrapSecretary(in.getSecretaries())
 			, in.getAbort()
+			, in.getName()
 			, in.getVacationHours()
 			, TimeSheet.wrapTimeSheet(in.getTimeSheets())
-			, in.getName()
 			, in.getComment()
 			, in.getEnd()
 			, in.getVacationDaysPerYear()
@@ -172,6 +172,14 @@ public class Contract extends AbstractTransferObject {
 		this.description = description;
 	}
 
+	public org.alpha.tss.entities.ContractType getType() {
+		return type;
+	}
+
+	public void setType(org.alpha.tss.entities.ContractType type) {
+		this.type = type;
+	}
+
 	public java.util.Currency getSalary() {
 		return salary;
 	}
@@ -186,14 +194,6 @@ public class Contract extends AbstractTransferObject {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
-
-	public org.alpha.tss.entities.ContractType getType() {
-		return type;
-	}
-
-	public void setType(org.alpha.tss.entities.ContractType type) {
-		this.type = type;
 	}
 
 	public java.lang.Integer getTotalHoursDue() {
@@ -228,6 +228,14 @@ public class Contract extends AbstractTransferObject {
 		this.abort = abort;
 	}
 
+	public java.lang.String getName() {
+		return name;
+	}
+
+	public void setName(java.lang.String name) {
+		this.name = name;
+	}
+
 	public java.lang.Integer getVacationHours() {
 		return vacationHours;
 	}
@@ -242,14 +250,6 @@ public class Contract extends AbstractTransferObject {
 
 	public void setTimeSheets(java.util.Set<TimeSheet> timeSheets) {
 		this.timeSheets = timeSheets;
-	}
-
-	public java.lang.String getName() {
-		return name;
-	}
-
-	public void setName(java.lang.String name) {
-		this.name = name;
 	}
 
 	public java.lang.String getComment() {

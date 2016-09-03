@@ -29,14 +29,14 @@ public class Role extends AbstractTransferObject {
 	}
 	public static Role wrapRole(org.alpha.tss.entities.RoleEntity in) {
 		if(in == null) return null;
-		if(in instanceof org.alpha.tss.entities.EmployeeEntity)
-			return Employee.wrapEmployee((org.alpha.tss.entities.EmployeeEntity)in);
-		if(in instanceof org.alpha.tss.entities.AssistantEntity)
-			return Assistant.wrapAssistant((org.alpha.tss.entities.AssistantEntity)in);
 		if(in instanceof org.alpha.tss.entities.SecretaryEntity)
 			return Secretary.wrapSecretary((org.alpha.tss.entities.SecretaryEntity)in);
+		if(in instanceof org.alpha.tss.entities.AssistantEntity)
+			return Assistant.wrapAssistant((org.alpha.tss.entities.AssistantEntity)in);
 		if(in instanceof org.alpha.tss.entities.SupervisorEntity)
 			return Supervisor.wrapSupervisor((org.alpha.tss.entities.SupervisorEntity)in);
+		if(in instanceof org.alpha.tss.entities.EmployeeEntity)
+			return Employee.wrapEmployee((org.alpha.tss.entities.EmployeeEntity)in);
 		return new Role(in.getId()
 		);
 	}

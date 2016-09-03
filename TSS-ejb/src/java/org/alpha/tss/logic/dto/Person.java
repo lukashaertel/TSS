@@ -17,9 +17,9 @@ public class Person extends AbstractTransferObject {
 
 	private java.lang.String email;
 
-	private java.lang.String lastname;
-
 	private java.util.Locale preferredLocale;
+
+	private java.lang.String lastname;
 
 	public Person() { }
 
@@ -30,8 +30,8 @@ public class Person extends AbstractTransferObject {
 		, java.time.LocalDate dateOfBirth
 		, java.lang.String title
 		, java.lang.String email
-		, java.lang.String lastname
 		, java.util.Locale preferredLocale
+		, java.lang.String lastname
 	) {
 		super(id
 		);
@@ -41,8 +41,8 @@ public class Person extends AbstractTransferObject {
 		this.dateOfBirth = dateOfBirth;
 		this.title = title;
 		this.email = email;
-		this.lastname = lastname;
 		this.preferredLocale = preferredLocale;
+		this.lastname = lastname;
 	}
 
 	public static java.util.Set<Person> wrapPerson(java.util.Set<org.alpha.tss.entities.PersonEntity> ins) {
@@ -68,8 +68,8 @@ public class Person extends AbstractTransferObject {
 			, in.getDateOfBirth()
 			, in.getTitle()
 			, in.getEmail()
-			, in.getLastname()
 			, in.getPreferredLocale()
+			, in.getLastname()
 		);
 	}
 	public java.lang.String getFirstname() {
@@ -120,20 +120,20 @@ public class Person extends AbstractTransferObject {
 		this.email = email;
 	}
 
-	public java.lang.String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(java.lang.String lastname) {
-		this.lastname = lastname;
-	}
-
 	public java.util.Locale getPreferredLocale() {
 		return preferredLocale;
 	}
 
 	public void setPreferredLocale(java.util.Locale preferredLocale) {
 		this.preferredLocale = preferredLocale;
+	}
+
+	public java.lang.String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(java.lang.String lastname) {
+		this.lastname = lastname;
 	}
 
 }
