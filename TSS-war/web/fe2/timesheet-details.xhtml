@@ -53,19 +53,19 @@
             <hr/>
             <b:modal id="amodal" title="TimeSheetEntry Creation" styleClass="modalPseudoClass">
                 <b:container fluid="true">                    
-                        <b:row>
-                            <b:inputText span="12" placeholder="Description of work" value="#{timeSheetEntryCRUDBean.descriptionOfWork}"/>
-                        </b:row>
-                        <b:row>
-                            <b:inputText span="12" placeholder="Comment" value="#{timeSheetEntryCRUDBean.comment}"/>
-                        </b:row>                        
-                        <b:row>
-                            <b:inputText span="12" placeholder="Hours" value="#{timeSheetEntryCRUDBean.hours}"/>
-                        </b:row>
-                        <b:row>
-                            <b:datepicker tooltip="Date" large-screen="full-width" value="#{timeSheetEntryCRUDBean.date}"/>
-                        </b:row>
-                    </b:container>
+                    <b:row>
+                        <b:inputText span="12" placeholder="Description of work" value="#{timeSheetEntryCRUDBean.descriptionOfWork}"/>
+                    </b:row>
+                    <b:row>
+                        <b:inputText span="12" placeholder="Comment" value="#{timeSheetEntryCRUDBean.comment}"/>
+                    </b:row>                        
+                    <b:row>
+                        <b:inputText span="12" placeholder="Hours" value="#{timeSheetEntryCRUDBean.hours}"/>
+                    </b:row>
+                    <b:row>
+                        <b:datepicker tooltip="Date" large-screen="full-width" value="#{timeSheetEntryCRUDBean.date}"/>
+                    </b:row>
+                </b:container>
                 <f:facet name="footer">
                     <b:commandButton value="Create" look="primary" onclick="amodal.dismiss();" action="#{timeSheetEntryCRUDBean.createTimeSheetEntry(timeSheetDetailsBean.id)}"/>
                 </f:facet>
@@ -95,5 +95,64 @@
                 </h:dataTable>
             </b:row>
         </ui:define>
+
+        <ui:param name="printable" value="true" />
+
+        <ui:define name="printcontent">
+            <!-- Print content area -->
+            <h1>${msg.timesheet}</h1>
+            <hr/>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{timeSheetDetailsBean.timeSheet}" var="t">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{t.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{msg[t.status]}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Hours due" /></f:facet>
+                        <h:outputText value="#{t.hoursDue}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Start" /></f:facet>
+                        <h:outputText value="#{t.start}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="End" /></f:facet>
+                        <h:outputText value="#{t.end}" />
+                    </h:column>
+                </h:dataTable>
+            </b:row>
+            <h1>${msg.timesheetentries}</h1>
+            <hr/>
+            <b:row styleClass="table-responsive">
+                <h:dataTable styleClass="table table-striped" value="#{timeSheetDetailsBean.timeSheetEntries}" var="te" rows="15">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{te.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Description of work" /></f:facet>
+                        <h:outputText value="#{te.descriptionOfWork}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Comment" /></f:facet>
+                        <h:outputText value="#{te.comment}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Date" /></f:facet>
+                        <h:outputText converter="localDateTimeConverter" value="#{te.date}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Hours" /></f:facet>
+                        <h:outputText value="#{te.hours}" />
+                    </h:column>
+                </h:dataTable>
+            </b:row>
+        </ui:define>
+
     </ui:composition>
 </html>

@@ -80,7 +80,6 @@ public class ReminderBean {
             for (TimeSheet t : logic.getTimeSheetsByContractId(c.getId()))
                 // Contract with time sheet on or after the last day
                 if (now.isEqual(t.getEnd()) || now.isAfter(t.getEnd())) {
-
                     // Handle the cases given by RE1-RE3
                     switch (t.getStatus()) {
                         // In Progress and not after expiration, a.p. RE1
@@ -105,7 +104,6 @@ public class ReminderBean {
 
         // Process the selected reminders
         processReminders(reminders);
-
     }
 
     /**
