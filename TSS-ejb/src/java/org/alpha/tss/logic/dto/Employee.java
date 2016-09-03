@@ -13,6 +13,8 @@ public class Employee extends Role {
 		);
 	}
 
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.Set<Employee> wrapEmployee(java.util.Set<org.alpha.tss.entities.EmployeeEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Employee> out = new java.util.HashSet<>();
@@ -20,6 +22,8 @@ public class Employee extends Role {
 			out.add(wrapEmployee(in));
 		return out;
 	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.List<Employee> wrapEmployee(java.util.List<org.alpha.tss.entities.EmployeeEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Employee> out = new java.util.ArrayList<>();

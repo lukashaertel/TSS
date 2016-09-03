@@ -33,6 +33,8 @@ public class TimeSheet extends AbstractTransferObject {
 		this.status = status;
 	}
 
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.Set<TimeSheet> wrapTimeSheet(java.util.Set<org.alpha.tss.entities.TimeSheetEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<TimeSheet> out = new java.util.HashSet<>();
@@ -40,6 +42,8 @@ public class TimeSheet extends AbstractTransferObject {
 			out.add(wrapTimeSheet(in));
 		return out;
 	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.List<TimeSheet> wrapTimeSheet(java.util.List<org.alpha.tss.entities.TimeSheetEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<TimeSheet> out = new java.util.ArrayList<>();

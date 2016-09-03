@@ -45,6 +45,8 @@ public class Person extends AbstractTransferObject {
 		this.preferredLocale = preferredLocale;
 	}
 
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.Set<Person> wrapPerson(java.util.Set<org.alpha.tss.entities.PersonEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Person> out = new java.util.HashSet<>();
@@ -52,6 +54,8 @@ public class Person extends AbstractTransferObject {
 			out.add(wrapPerson(in));
 		return out;
 	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.List<Person> wrapPerson(java.util.List<org.alpha.tss.entities.PersonEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Person> out = new java.util.ArrayList<>();

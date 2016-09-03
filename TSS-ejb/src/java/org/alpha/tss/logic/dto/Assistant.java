@@ -13,6 +13,8 @@ public class Assistant extends Role {
 		);
 	}
 
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.Set<Assistant> wrapAssistant(java.util.Set<org.alpha.tss.entities.AssistantEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Assistant> out = new java.util.HashSet<>();
@@ -20,6 +22,8 @@ public class Assistant extends Role {
 			out.add(wrapAssistant(in));
 		return out;
 	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.List<Assistant> wrapAssistant(java.util.List<org.alpha.tss.entities.AssistantEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Assistant> out = new java.util.ArrayList<>();

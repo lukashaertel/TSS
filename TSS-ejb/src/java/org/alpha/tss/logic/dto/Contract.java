@@ -93,6 +93,8 @@ public class Contract extends AbstractTransferObject {
 		this.status = status;
 	}
 
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.Set<Contract> wrapContract(java.util.Set<org.alpha.tss.entities.ContractEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Contract> out = new java.util.HashSet<>();
@@ -100,6 +102,8 @@ public class Contract extends AbstractTransferObject {
 			out.add(wrapContract(in));
 		return out;
 	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.List<Contract> wrapContract(java.util.List<org.alpha.tss.entities.ContractEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Contract> out = new java.util.ArrayList<>();

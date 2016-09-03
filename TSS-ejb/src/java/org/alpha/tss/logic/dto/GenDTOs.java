@@ -237,6 +237,8 @@ public class GenDTOs {
         // Conversion
         ////////////////////////////////////////////////////////////////////////
         // Set Wrapper
+        target.println("\t// Abstract TO conversion is not implemented");
+        target.println("\t@java.lang.Deprecated");
         target.println("\tpublic static java.util.Set<" + translatedName(c) + "> wrap" + translatedName(c) + "(java.util.Set<" + c.getTypeName() + "> ins) {");
         target.println("\t\tif(ins == null) return null;");
         target.println("\t\tjava.util.Set<" + translatedName(c) + "> out = new java.util.HashSet<>();");
@@ -246,6 +248,8 @@ public class GenDTOs {
         target.println("\t}");
 
         // List Wrapper
+        target.println("\t// Abstract TO conversion is not implemented");
+        target.println("\t@java.lang.Deprecated");
         target.println("\tpublic static java.util.List<" + translatedName(c) + "> wrap" + translatedName(c) + "(java.util.List<" + c.getTypeName() + "> ins) {");
         target.println("\t\tif(ins == null) return null;");
         target.println("\t\tjava.util.List<" + translatedName(c) + "> out = new java.util.ArrayList<>();");

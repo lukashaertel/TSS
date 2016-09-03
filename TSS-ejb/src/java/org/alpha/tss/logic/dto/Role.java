@@ -13,6 +13,8 @@ public class Role extends AbstractTransferObject {
 		);
 	}
 
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.Set<Role> wrapRole(java.util.Set<org.alpha.tss.entities.RoleEntity> ins) {
 		if(ins == null) return null;
 		java.util.Set<Role> out = new java.util.HashSet<>();
@@ -20,6 +22,8 @@ public class Role extends AbstractTransferObject {
 			out.add(wrapRole(in));
 		return out;
 	}
+	// Abstract TO conversion is not implemented
+	@java.lang.Deprecated
 	public static java.util.List<Role> wrapRole(java.util.List<org.alpha.tss.entities.RoleEntity> ins) {
 		if(ins == null) return null;
 		java.util.List<Role> out = new java.util.ArrayList<>();
